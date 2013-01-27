@@ -1,0 +1,18 @@
+# General detritus
+*~
+.*.sw?
+# Python detritus
+*.py[oc]
+# Package-building detritus
+/build
+/dist
+/*.egg-info
+/MANIFEST
+_build/
+/cover
+.coverage
+.tox
+__pycache__
+# Other random nonsense
+/.venv
+*.db

@@ -1,0 +1,4 @@
+include LICENSE ChangeLog buildkit.py
+recursive-include docs *.rst *.py
+recursive-include tests *.py
+recursive-include examples *.py *.sql
