@@ -7,8 +7,7 @@ import web
 
 
 urls = (
-    # List recent pastes; add new paste.
-    '/', 'Root',
+    '/', 'List',
 )
 
 
@@ -18,7 +17,7 @@ render = web.template.render(
     globals={})
 
 
-class Root(object):
+class List(object):
 
-    def GET(self, action):
-        return render.index('We now have template rendering.')
+    def GET(self):
+        return render.index()
