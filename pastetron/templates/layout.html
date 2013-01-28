@@ -3,9 +3,12 @@ $def with (content)
 <html>
 	<head>
 		<title>$content.title - Pastetron</title>
+		$for name in ('all', 'screen', 'print'):
+			<link rel="stylesheet" type="text/css" media="$name" href="/static/${name}.css">
 	</head>
 	<body>
+		<div class="nav">Navigation goes here</div>
 		<h1>Pastetron: $content.title</h1>
-		<div>$:content</div>
+		<div class="content">$:content</div>
 	</body>
 </html>
