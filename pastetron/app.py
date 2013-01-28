@@ -1,6 +1,7 @@
 """
 """
 
+import os.path
 
 import web
 
@@ -11,10 +12,13 @@ urls = (
 )
 
 
-render = web.template.render('templates', base='layout', globals={})
+render = web.template.render(
+    os.path.join(os.path.dirname(__file__), 'templates'),
+    base='layout',
+    globals={})
 
 
 class Root(object):
 
-    def GET(self):
-        return 'You are being served!'
+    def GET(self, action):
+        return render.index('We now have template rendering.')
