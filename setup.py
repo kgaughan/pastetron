@@ -23,7 +23,10 @@ setup(
 
     entry_points={
         'console_scripts': [
-        ]
+        ],
+        'paste.app_factory': [
+            'main=pastetron:paste',
+        ],
     },
 
     classifiers=[
