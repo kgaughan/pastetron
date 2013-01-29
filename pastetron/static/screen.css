@@ -24,11 +24,43 @@ h1 {
 }
 
 .nav {
+	font-family: Verdana, serif;
+	font-size: 80%;
 	background: linear-gradient(to bottom, rgba(125,185,232,1) 0%, rgba(255,255,255,0) 100%);
 	background: -moz-linear-gradient(top, rgba(125,185,232,1) 0%, rgba(255,255,255,0) 100%);
 	background: -ms-linear-gradient(top, rgba(125,185,232,1) 0%, rgba(255,255,255,0) 100%);
 	background: -webkit-linear-gradient(top, rgba(125,185,232,1) 0%, rgba(255,255,255,0) 100%);
-	padding: 1ex 1em;
+	padding: 0 1.25em 1.25ex 1.25em;
+}
+
+.nav ul {
+	overflow: hidden;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.nav ul li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	float: right;
+}
+
+.nav ul li.primary {
+	float: left;
+}
+
+.nav a {
+	font-weight: bold;
+	color: #24A;
+	text-decoration: none;
+	display: block;
+	padding: 1ex;
+}
+
+.nav a:hover {
+	background: white;
 }
 
 .content {
