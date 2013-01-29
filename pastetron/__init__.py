@@ -15,4 +15,5 @@ def paste(global_config, **settings):
     """
     PasteDeploy runner.
     """
-    return pastetron.utils.initialise(pastetron.app, settings).wsgifunc()
+    app = pastetron.utils.initialise(pastetron.app, global_config, settings)
+    return app.wsgifunc()
