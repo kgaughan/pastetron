@@ -11,6 +11,7 @@ from pastetron import db, utils
 urls = (
     '/', 'Post',
     '/(\d+)', 'Show',
+    '/(\d+)/raw', 'ShowRaw',
     '/pygments.css', 'Stylesheet',
 )
 
@@ -55,6 +56,15 @@ class Show(object):
             body=formatted,
             format=utils.ALIAS_TO_NAME[row['format']]
         )
+
+
+class ShowRaw(object):
+
+    def GET(self, paste_id):
+        row = db.get_paste(paste_id)
+        if row is None:
+            return web.notfound('No such paste.')
+        return row['body']
 
 
 class Stylesheet(object):

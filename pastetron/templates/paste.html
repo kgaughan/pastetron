@@ -1,6 +1,10 @@
 $def with (paste_id, created, poster, body, format)
 $var title: Paste #$paste_id
 
-<div>$:body</div>
+<div class="paste">
+	<p><a href="/$paste_id/raw">Download raw text</a></p>
+	<div>$:body</div>
+	<p><a href="/$paste_id/raw">Download raw text</a></p>
+</div>
 
 <p>Pasted by <strong>$poster</strong> at <strong>$created</strong></p>
