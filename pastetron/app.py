@@ -31,5 +31,9 @@ class Post(object):
         form = web.input(poster='', format='', body='')
         if form.body.strip() == '':
             web.seeother('/')
-        paste_id = db.add_paste(form.poster, form.body, form.format)
+        if form.format == '':
+            format = utils.guess_lexer_alias(form.body)
+        else:
+            format = form.format
+        paste_id = db.add_paste(form.poster, form.body, format)
         web.seeother('/%d' % (paste_id,))

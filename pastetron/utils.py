@@ -16,6 +16,13 @@ LEXERS = [('Guess', '')] + sorted(
     if len(aliases) > 0)
 
 
+def guess_lexer_alias(body):
+    """
+    Guess the alias of the lexer to use when rendering the given text.
+    """
+    return pygments.lexers.guess_lexer(body).aliases[0]
+
+
 def configure_db_hook(app, global_config, settings):
     """
     Ensure each request is done in a properly configured database context.
