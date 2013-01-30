@@ -1,6 +1,4 @@
 include LICENSE ChangeLog buildkit.py
-recursive-include docs *.rst *.py
-recursive-include tests *.py
-recursive-include examples *.py *.sql
-recursive-include pastetron/static *.css *.js *.png
+recursive-include extra *.ini *.sql
+recursive-include pastetron/static *.css
 recursive-include pastetron/templates *.html
