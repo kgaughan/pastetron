@@ -5,6 +5,7 @@ html {
 	font-family: Georgia, serif;
 	background: #eee url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEXm5ub///8xREvZAAAAIUlEQVQIHWNkZGABIiYGFhYGFg4GFgEGFgUGFgcGRhziABayATuv5N5RAAAAAElFTkSuQmCC);
 	height: 100%;
+	line-height: 1.4;
 }
 body {
 	background: white;
