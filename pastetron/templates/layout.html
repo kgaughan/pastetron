@@ -5,6 +5,7 @@ $def with (content)
 		<title>$content.title - Pastetron</title>
 		$for name in ('all', 'screen', 'print'):
 			<link rel="stylesheet" type="text/css" media="$name" href="/static/${name}.css">
+		<link rel="stylesheet" type="text/css" media="all" href="/pygments.css">
 	</head>
 	<body>
 		<div class="nav">

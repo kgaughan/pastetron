@@ -24,7 +24,14 @@ ALIAS_TO_NAME = dict((alias, longname) for longname, alias in LEXERS)
 # create it once.
 FORMATTER = pygments.formatters.HtmlFormatter(
     linenos=True,
-    cssclass='source')
+    cssclass='highlight')
+
+
+def get_pygments_stylesheet():
+    """
+    Generate a stylesheet for syntax highlighting the output.
+    """
+    return FORMATTER.get_style_defs('.highlight')
 
 
 def guess_lexer_alias(body):

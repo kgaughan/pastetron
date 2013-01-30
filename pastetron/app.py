@@ -11,6 +11,7 @@ from pastetron import db, utils
 urls = (
     '/', 'Post',
     '/(\d+)', 'Show',
+    '/pygments.css', 'Stylesheet',
 )
 
 
@@ -54,3 +55,9 @@ class Show(object):
             body=formatted,
             format=utils.ALIAS_TO_NAME[row['format']]
         )
+
+
+class Stylesheet(object):
+
+    def GET(self):
+        return utils.get_pygments_stylesheet()
