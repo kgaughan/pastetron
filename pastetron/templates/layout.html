@@ -3,9 +3,9 @@ $def with (content)
 <html>
 	<head>
 		<title>$content.title - Pastetron</title>
+		<link rel="stylesheet" type="text/css" media="all" href="/pygments.css">
 		$for name in ('all', 'screen', 'print'):
 			<link rel="stylesheet" type="text/css" media="$name" href="/static/${name}.css">
-		<link rel="stylesheet" type="text/css" media="all" href="/pygments.css">
 	</head>
 	<body>
 		<div class="nav">

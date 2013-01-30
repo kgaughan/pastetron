@@ -74,6 +74,18 @@ h1 span {
 	padding: 1ex 1em;
 }
 
+.content .paste {
+	margin: 0 -1em;
+	padding: 1ex 1em;
+	border-top: 1px solid #DDD;
+	border-bottom: 1px solid #DDD;
+	background: #EEE;
+}
+
+.content .paste p {
+	margin: 0;
+}
+
 form textarea {
 	/* I think this is one of the few valid uses of !important I can think
 	   of within something other than a user stylesheet. */

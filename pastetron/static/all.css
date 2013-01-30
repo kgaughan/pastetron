@@ -1,8 +1,14 @@
 .highlighttable .linenos {
-	border-right: 2px solid silver;
-	padding-right: 1ex;
+	background: #DDD;
+	border-right: 2px solid #CCC;
+	padding: 0 1ex;
 }
 
 .highlighttable .code {
 	padding-left: 1ex;
+	background: inherit;
+}
+
+.highlight {
+	background: inherit;
 }
