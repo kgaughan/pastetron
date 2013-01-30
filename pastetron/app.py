@@ -5,7 +5,7 @@ import os.path
 
 import web
 
-from pastetron import utils
+from pastetron import db, utils
 
 
 urls = (
@@ -26,3 +26,10 @@ class Post(object):
 
     def GET(self):
         return render.post()
+
+    def POST(self):
+        form = web.input(poster='', format='', body='')
+        if form.body.strip() == '':
+            web.seeother('/')
+        paste_id = db.add_paste(form.poster, form.body, form.format)
+        web.seeother('/%d' % (paste_id,))
