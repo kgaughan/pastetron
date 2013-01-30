@@ -10,6 +10,7 @@ from pastetron import db, utils
 
 urls = (
     '/', 'Post',
+    '/(\d+)', 'Show',
 )
 
 
@@ -37,3 +38,19 @@ class Post(object):
             format = form.format
         paste_id = db.add_paste(form.poster, form.body, format)
         web.seeother('/%d' % (paste_id,))
+
+
+class Show(object):
+
+    def GET(self, paste_id):
+        row = db.get_paste(paste_id)
+        if row is None:
+            return web.notfound('No such paste.')
+        formatted = utils.highlight(row['body'], row['format'])
+        return render.paste(
+            paste_id=paste_id,
+            created=row['created'],
+            poster=row['poster'],
+            body=formatted,
+            format=utils.ALIAS_TO_NAME[row['format']]
+        )
