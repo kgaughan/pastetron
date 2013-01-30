@@ -1,4 +1,5 @@
 """
+Application views and routes.
 """
 
 import os.path

@@ -67,11 +67,11 @@ def configure_db_hook(app, global_config, settings):
     app.add_processor(request_processor)
 
 
-def initialise(module, global_config, settings):
+def initialise(views, global_config, settings):
     """
-    Initialises a web.py application module as a WSGI application.
+    Initialises a web.py views views as a WSGI application.
     """
-    symbols = dict((k, getattr(module, k)) for k in dir(module))
-    app = web.application(module.urls, symbols)
+    symbols = dict((k, getattr(views, k)) for k in dir(views))
+    app = web.application(views.urls, symbols)
     configure_db_hook(app, global_config, settings)
     return app
