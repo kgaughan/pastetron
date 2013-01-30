@@ -5,7 +5,15 @@ Utility functions.
 import sqlite3
 
 import dbkit
+import pygments.lexers
 import web
+
+
+# for generating the lexers dropdown.
+LEXERS = [('Guess', '')] + sorted(
+    (longname, aliases[0])
+    for longname, aliases, _, _ in pygments.lexers.get_all_lexers()
+    if len(aliases) > 0)
 
 
 def configure_db_hook(app, global_config, settings):

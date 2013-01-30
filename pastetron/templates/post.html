@@ -1,0 +1,29 @@
+$def with (poster="Anonymous", format='', body='')
+$var title: New paste
+
+<form method="post" action="">
+	<div>
+		<label>
+			<strong>Your name</strong>
+			<input type="text" name="poster" value="$poster">
+		</label>
+	</div>
+	<div>
+		<label>
+			<strong>Format</strong>
+			<select name="format">
+			$for name, value in lexers:
+				$if format == value:
+					<option value="$value" selected>$name</option>
+				$else:
+					<option value="$value">$name</option>
+			</select>
+		</label>
+	</div>
+	<div>
+		<textarea rows="20" name="body">$body</textarea>
+	</div>
+	<div>
+		<input type="submit" value="Paste!">
+	</div>
+</form>

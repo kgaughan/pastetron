@@ -67,3 +67,14 @@ h1 {
 .content {
 	padding: 1ex 1em;
 }
+
+form textarea {
+	/* I think this is one of the few valid uses of !important I can think
+	   of within something other than a user stylesheet. */
+	width: 100% !important;
+}
+form label strong {
+	display: inline-block;
+	width: 6em;
+	text-align: right;
+}

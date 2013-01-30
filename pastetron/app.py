@@ -5,19 +5,24 @@ import os.path
 
 import web
 
+from pastetron import utils
+
 
 urls = (
-    '/', 'List',
+    '/', 'Post',
 )
 
 
 render = web.template.render(
     os.path.join(os.path.dirname(__file__), 'templates'),
     base='layout',
-    globals={})
+    globals={
+        'lexers': utils.LEXERS,
+    }
+)
 
 
-class List(object):
+class Post(object):
 
     def GET(self):
-        return render.index()
+        return render.post()
