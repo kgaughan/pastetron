@@ -1,0 +1,6 @@
+ * Comments
+ * Recording of the name field in a cookie.
+ * Archive
+ * Password protection (AES256+CTR+HMAC)
+ * Feed of most recent 
+ * Gravatars (requires email addresses)
