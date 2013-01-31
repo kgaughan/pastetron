@@ -37,9 +37,9 @@ def guess_lexer_alias(body):
     return pygments.lexers.guess_lexer(body).aliases[0]
 
 
-def highlight(body, format):
+def highlight(body, syntax):
     """
     Have Pygments format the given text.
     """
-    lexer = pygments.lexers.get_lexer_by_name(format)
+    lexer = pygments.lexers.get_lexer_by_name(syntax)
     return pygments.highlight(body, lexer, FORMATTER)

@@ -1,4 +1,4 @@
-$def with (poster="Anonymous", format='', body='')
+$def with (poster="Anonymous", syntax='', body='')
 $var title: New paste
 
 <form method="post" action="">
@@ -10,10 +10,10 @@ $var title: New paste
 	</div>
 	<div>
 		<label>
-			<strong>Format</strong>
-			<select name="format">
+			<strong>Syntax</strong>
+			<select name="syntax">
 			$for name, value in lexers:
-				$if format == value:
+				$if syntax == value:
 					<option value="$value" selected>$name</option>
 				$else:
 					<option value="$value">$name</option>

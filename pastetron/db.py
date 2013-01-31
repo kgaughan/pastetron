@@ -9,7 +9,7 @@ import dbkit
 def add_paste(poster, body, fmt):
     dbkit.execute("""
         INSERT INTO pastes (
-            poster, body, format
+            poster, body, syntax
         ) VALUES (
             ?, ?, ?
         )
@@ -19,7 +19,7 @@ def add_paste(poster, body, fmt):
 
 def get_paste(paste_id):
     return dbkit.query_row("""
-        SELECT  paste_id, created, poster, body, format
+        SELECT  paste_id, created, poster, body, syntax
         FROM    pastes
         WHERE   paste_id = ?
         """, (paste_id,))

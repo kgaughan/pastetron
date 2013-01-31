@@ -10,10 +10,10 @@ from pastetron import db, highlighting
 
 
 urls = (
-    '/', 'Post',
-    '/(\d+)', 'Show',
-    '/(\d+)/raw', 'ShowRaw',
-    '/pygments.css', 'Stylesheet',
+    r'/', 'Post',
+    r'/(\d+)', 'Show',
+    r'/(\d+)/raw', 'ShowRaw',
+    r'/pygments.css', 'Stylesheet',
 )
 
 
@@ -32,14 +32,14 @@ class Post(object):
         return render.post()
 
     def POST(self):
-        form = web.input(poster='', format='', body='')
+        form = web.input(poster='', syntax='', body='')
         if form.body.strip() == '':
             web.seeother('/')
-        if form.format == '':
-            format = highlighting.guess_lexer_alias(form.body)
+        if form.syntax == '':
+            syntax = highlighting.guess_lexer_alias(form.body)
         else:
-            format = form.format
-        paste_id = db.add_paste(form.poster, form.body, format)
+            syntax = form.syntax
+        paste_id = db.add_paste(form.poster, form.body, syntax)
         web.seeother('/%d' % (paste_id,))
 
 
@@ -49,13 +49,13 @@ class Show(object):
         row = db.get_paste(paste_id)
         if row is None:
             return web.notfound('No such paste.')
-        formatted = highlighting.highlight(row['body'], row['format'])
+        formatted = highlighting.highlight(row['body'], row['syntax'])
         return render.paste(
             paste_id=paste_id,
             created=row['created'],
             poster=row['poster'],
             body=formatted,
-            format=highlighting.ALIAS_TO_NAME[row['format']]
+            syntax=highlighting.ALIAS_TO_NAME[row['syntax']]
         )
 
 

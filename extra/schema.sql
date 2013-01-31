@@ -3,7 +3,7 @@ CREATE TABLE pastes (
 	created     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	poster      TEXT     NOT NULL DEFAULT 'Anonymous',
 	body        TEXT     NOT NULL,
-	format      TEXT     NOT NULL DEFAULT 'text'
+	syntax      TEXT     NOT NULL DEFAULT 'text'
 );
 
 CREATE INDEX ix_paste_created ON pastes (created);
