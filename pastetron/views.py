@@ -6,7 +6,7 @@ import os.path
 
 import web
 
-from pastetron import db, utils
+from pastetron import db, highlighting
 
 
 urls = (
@@ -21,7 +21,7 @@ render = web.template.render(
     os.path.join(os.path.dirname(__file__), 'templates'),
     base='layout',
     globals={
-        'lexers': utils.LEXERS,
+        'lexers': highlighting.LEXERS,
     }
 )
 
@@ -36,7 +36,7 @@ class Post(object):
         if form.body.strip() == '':
             web.seeother('/')
         if form.format == '':
-            format = utils.guess_lexer_alias(form.body)
+            format = highlighting.guess_lexer_alias(form.body)
         else:
             format = form.format
         paste_id = db.add_paste(form.poster, form.body, format)
@@ -49,13 +49,13 @@ class Show(object):
         row = db.get_paste(paste_id)
         if row is None:
             return web.notfound('No such paste.')
-        formatted = utils.highlight(row['body'], row['format'])
+        formatted = highlighting.highlight(row['body'], row['format'])
         return render.paste(
             paste_id=paste_id,
             created=row['created'],
             poster=row['poster'],
             body=formatted,
-            format=utils.ALIAS_TO_NAME[row['format']]
+            format=highlighting.ALIAS_TO_NAME[row['format']]
         )
 
 
@@ -71,4 +71,4 @@ class ShowRaw(object):
 class Stylesheet(object):
 
     def GET(self):
-        return utils.get_pygments_stylesheet()
+        return highlighting.get_stylesheet()
