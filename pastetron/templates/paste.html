@@ -2,9 +2,7 @@ $def with (paste_id, created, poster, body, syntax)
 $var title: Paste #$paste_id
 
 <div class="paste">
-	<p><a href="/$paste_id/raw">Download raw text</a></p>
+	<p>Pasted by <strong>$poster</strong> at <strong>$created</strong>:</p>
 	<div>$:body</div>
-	<p><a href="/$paste_id/raw">Download raw text</a></p>
+	<p class="tools"><a href="/$paste_id/raw">Download raw text</a></p>
 </div>
-
-<p>Pasted by <strong>$poster</strong> at <strong>$created</strong></p>

@@ -86,6 +86,10 @@ h1 span {
 	margin: 0;
 }
 
+.content .paste .tools {
+	text-align: right;
+}
+
 form textarea {
 	/* I think this is one of the few valid uses of !important I can think
 	   of within something other than a user stylesheet. */
