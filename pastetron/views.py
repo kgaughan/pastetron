@@ -23,7 +23,7 @@ render = web.template.render(
     base='layout',
     globals={
         'lexers': highlighting.LEXERS,
-        'creole2html': creole.creole2html
+        'creole2html': creole.creole2html,
     }
 )
 
@@ -59,7 +59,7 @@ class Show(object):
             poster=row['poster'],
             body=formatted,
             syntax=highlighting.ALIAS_TO_NAME[row['syntax']],
-            comments=comments
+            comments=comments,
         )
 
     def POST(self, paste_id):

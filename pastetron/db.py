@@ -33,7 +33,7 @@ def add_comment(paste_id, poster, body):
         ) VALUES (
             ?, ?, ?
         )
-        """, (paste_id, poster,body))
+        """, (paste_id, poster, body))
     return dbkit.last_row_id()
 
 
