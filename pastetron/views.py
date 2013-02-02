@@ -4,6 +4,7 @@ Application views and routes.
 
 import os.path
 
+import creole
 import web
 
 from pastetron import db, highlighting
@@ -22,6 +23,7 @@ render = web.template.render(
     base='layout',
     globals={
         'lexers': highlighting.LEXERS,
+        'creole2html': creole.creole2html
     }
 )
 
@@ -50,13 +52,21 @@ class Show(object):
         if row is None:
             return web.notfound('No such paste.')
         formatted = highlighting.highlight(row['body'], row['syntax'])
+        comments = db.get_comments(paste_id)
         return render.paste(
             paste_id=paste_id,
             created=row['created'],
             poster=row['poster'],
             body=formatted,
-            syntax=highlighting.ALIAS_TO_NAME[row['syntax']]
+            syntax=highlighting.ALIAS_TO_NAME[row['syntax']],
+            comments=comments
         )
+
+    def POST(self, paste_id):
+        form = web.input(poster='', body='')
+        if form.body.strip() != '':
+            db.add_comment(paste_id, form.poster, form.body)
+        web.seeother('/%s' % (paste_id,))
 
 
 class ShowRaw(object):
