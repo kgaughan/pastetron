@@ -6,3 +6,23 @@ $var title: Paste #$paste_id
 	<div>$:body</div>
 	<p class="tools"><a href="/$paste_id/raw">Download raw text</a></p>
 </div>
+
+$for comment in comments:
+	<div class="comment">
+		<p><strong>$comment['poster']</strong> wrote at <strong>$created</strong>:</p>
+		$:creole2html(comment['body'])
+	</div>
+
+<form method="post" action="">
+	<div>
+		<label>
+			<strong>Your name</strong>
+			<input type="text" name="poster" value="" size="40">
+		</label>
+	</div>
+	<div>
+		<textarea rows="10" name="body"></textarea>
+	<div>
+		<input type="submit" value="Comment!">
+	</div>
+</form>
