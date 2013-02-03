@@ -18,7 +18,7 @@ ALIAS_TO_NAME = dict((alias, longname) for longname, alias in LEXERS)
 
 # We'll be reusing this each time something is rendered, so might as well
 # create it once.
-FORMATTER = pygments.formatters.HtmlFormatter(
+FORMATTER = pygments.formatters.HtmlFormatter(  # pylint: disable-msg=E1101
     linenos=True,
     cssclass='highlight')
 

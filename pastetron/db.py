@@ -7,6 +7,9 @@ import dbkit
 
 @dbkit.transactional
 def add_paste(poster, title, body, fmt):
+    """
+    Create a new paste.
+    """
     dbkit.execute("""
         INSERT INTO pastes (
             poster, title, body, syntax
@@ -18,6 +21,9 @@ def add_paste(poster, title, body, fmt):
 
 
 def get_paste(paste_id):
+    """
+    Get a paste by ID.
+    """
     return dbkit.query_row("""
         SELECT  paste_id, created, poster, title, body, syntax
         FROM    pastes
@@ -27,6 +33,9 @@ def get_paste(paste_id):
 
 @dbkit.transactional
 def add_comment(paste_id, poster, body):
+    """
+    Attach a comment to a paste.
+    """
     dbkit.execute("""
         INSERT INTO comments (
             paste_id, poster, body
@@ -38,6 +47,9 @@ def add_comment(paste_id, poster, body):
 
 
 def get_comments(paste_id):
+    """
+    Get the comments attached to a paste.
+    """
     return dbkit.query("""
         SELECT   comment_id, paste_id, created, poster, body
         FROM     comments
