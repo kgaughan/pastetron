@@ -90,6 +90,57 @@ h1 span {
 	text-align: right;
 }
 
+.content table.pastes {
+	width: 100%;
+	border-top: 1px solid #DDD;
+	border-collapse: collapse;
+}
+
+.content table.pastes tr {
+	border-bottom: 1px solid #DDD;
+}
+
+.content table.pastes thead {
+	background: #EEE;
+}
+
+th, td {
+	padding: 0;
+	margin: 0;
+	text-align: left;
+}
+
+.content table.pastes th, .content table.pastes td {
+	padding: 0.125ex 0.25ex 0.5ex 0.25ex;
+}
+
+.content ol.pagination {
+	overflow: hidden;
+	width: 100%;
+	text-align: center;
+	margin: 1em 0;
+	padding: 0;
+	list-style: none;
+}
+
+.content ol.pagination li {
+	display: inline;
+	margin: 0 0.25ex;
+	padding: 0;
+}
+
+.content ol.pagination li.current {
+	padding: 0.125ex 0.75ex;
+	font-weight: bold;
+}
+
+.content ol.pagination li a {
+	padding: 0.125ex 0.75ex;
+	background: #DDD;
+	color: black;
+	text-decoration: none;
+}
+
 form textarea {
 	/* I think this is one of the few valid uses of !important I can think
 	   of within something other than a user stylesheet. */

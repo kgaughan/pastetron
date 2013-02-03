@@ -1,3 +1,35 @@
-$def with ()
-$var title: Latest pastes
-<p>Content goes here.</p>
+$def with (page_num, page_count, pastes)
+$var title: Index of pastes
+
+<table class="pastes">
+	<thead>
+		<tr>
+			<th>Title</th>
+			<th>Poster</th>
+			<th>Posted</th>
+		</tr>
+	</thead>
+	<tbody>
+	$for paste in pastes:
+		<tr>
+			<td>
+				$if paste['title'] == '':
+					<a href="/$paste['paste_id']">Paste #$paste['paste_id']</a>
+				$else:
+					<a href="/$paste['paste_id']">$paste['title']</a>
+			</td>
+			<td>$paste['poster']</td>
+			<td>$paste['created']</td>
+		</tr>
+	</tbody>
+</table>
+
+<ol class="pagination">
+$for page in paginator(page_num, page_count):
+	$if page is None:
+		<li>&#8230;</li>
+	$elif page == page_num:
+		<li class="current">$page</li>
+	$else:
+		<li><a href="/pastes/$page">$page</a></li>
+</ol>

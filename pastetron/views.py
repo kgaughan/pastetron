@@ -7,13 +7,14 @@ import os.path
 import creole
 import web
 
-from pastetron import db, highlighting
+from pastetron import db, highlighting, pagination
 
 
 urls = (
     r'/', 'Post',
     r'/(\d+)', 'Show',
     r'/(\d+)/raw', 'ShowRaw',
+    r'/pastes/(\d+)', 'Index',
     r'/pygments.css', 'Stylesheet',
 )
 
@@ -24,8 +25,22 @@ render = web.template.render(
     globals={
         'lexers': highlighting.LEXERS,
         'creole2html': creole.creole2html,
+        'paginator': pagination.paginator,
     }
 )
+
+
+class Index(object):
+
+    def GET(self, page_num):
+        page_num = int(page_num)
+        page_count = db.get_page_count()
+        if 0 >= page_num > page_count:
+            return web.notfound('No such page.')
+        return render.index(
+            page_num=page_num,
+            page_count=page_count,
+            pastes=db.get_paste_list(page_num))
 
 
 class Post(object):

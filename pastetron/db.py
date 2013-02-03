@@ -4,6 +4,8 @@ Database interface code.
 
 import dbkit
 
+from pastetron import constants
+
 
 @dbkit.transactional
 def add_paste(poster, title, body, fmt):
@@ -56,3 +58,24 @@ def get_comments(paste_id):
         WHERE    paste_id = ?
         ORDER BY created ASC
         """, (paste_id,))
+
+
+def get_page_count():
+    """
+    """
+    n_pastes = dbkit.query_value("SELECT COUNT(*) FROM pastes")
+    if n_pastes == 0:
+        return 0
+    return (n_pastes / constants.PASTES_PER_PAGE) + 1
+
+
+def get_paste_list(page):
+    """
+    """
+    start = (page - 1) * constants.PASTES_PER_PAGE
+    return dbkit.query("""
+        SELECT   paste_id, title, poster, created
+        FROM     pastes
+        ORDER BY created
+        LIMIT    ?, ?
+        """, (start, constants.PASTES_PER_PAGE))
