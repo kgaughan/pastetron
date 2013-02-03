@@ -6,20 +6,20 @@ import dbkit
 
 
 @dbkit.transactional
-def add_paste(poster, body, fmt):
+def add_paste(poster, title, body, fmt):
     dbkit.execute("""
         INSERT INTO pastes (
-            poster, body, syntax
+            poster, title, body, syntax
         ) VALUES (
-            ?, ?, ?
+            ?, ?, ?, ?
         )
-        """, (poster, body, fmt))
+        """, (poster, title, body, fmt))
     return dbkit.last_row_id()
 
 
 def get_paste(paste_id):
     return dbkit.query_row("""
-        SELECT  paste_id, created, poster, body, syntax
+        SELECT  paste_id, created, poster, title, body, syntax
         FROM    pastes
         WHERE   paste_id = ?
         """, (paste_id,))

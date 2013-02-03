@@ -2,6 +2,7 @@ CREATE TABLE pastes (
 	paste_id    INTEGER  NOT NULL PRIMARY KEY,
 	created     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	poster      TEXT     NOT NULL DEFAULT 'Anonymous',
+	title       TEXT     NOT NULL,
 	body        TEXT     NOT NULL,
 	syntax      TEXT     NOT NULL DEFAULT 'text'
 );

@@ -34,14 +34,18 @@ class Post(object):
         return render.post()
 
     def POST(self):
-        form = web.input(poster='', syntax='', body='')
+        form = web.input(poster='', title='', syntax='', body='')
         if form.body.strip() == '':
             web.seeother('/')
         if form.syntax == '':
             syntax = highlighting.guess_lexer_alias(form.body)
         else:
             syntax = form.syntax
-        paste_id = db.add_paste(form.poster, form.body, syntax)
+        paste_id = db.add_paste(
+            form.poster,
+            form.title.strip(),
+            form.body,
+            syntax)
         web.seeother('/%d' % (paste_id,))
 
 
@@ -51,12 +55,16 @@ class Show(object):
         row = db.get_paste(paste_id)
         if row is None:
             return web.notfound('No such paste.')
+        title = row['title']
+        if title == '':
+            title = 'Paste #%s' % paste_id
         formatted = highlighting.highlight(row['body'], row['syntax'])
         comments = db.get_comments(paste_id)
         return render.paste(
             paste_id=paste_id,
             created=row['created'],
             poster=row['poster'],
+            title=title,
             body=formatted,
             syntax=highlighting.ALIAS_TO_NAME[row['syntax']],
             comments=comments,
