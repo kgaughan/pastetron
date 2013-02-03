@@ -7,6 +7,7 @@ html {
 	height: 100%;
 	line-height: 1.4;
 }
+
 body {
 	background: white;
 	border-width: 0 1px;
@@ -31,7 +32,6 @@ h1 span {
 }
 
 .nav {
-	font-family: Verdana, serif;
 	font-size: 80%;
 	background: linear-gradient(to bottom, rgba(125,185,232,1) 0%, rgba(255,255,255,0) 100%);
 	background: -moz-linear-gradient(top, rgba(125,185,232,1) 0%, rgba(255,255,255,0) 100%);
@@ -139,6 +139,10 @@ th, td {
 	background: #DDD;
 	color: black;
 	text-decoration: none;
+}
+
+form {
+	margin: 1em 0;
 }
 
 form textarea {
