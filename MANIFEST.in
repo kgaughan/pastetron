@@ -1,4 +1,4 @@
-include LICENSE ChangeLog buildkit.py
+include LICENSE ChangeLog buildkit.py requirements.txt
 recursive-include extra *.ini *.sql
 recursive-include pastetron/static *.css
 recursive-include pastetron/templates *.html
