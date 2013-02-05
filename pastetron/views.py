@@ -51,7 +51,7 @@ class Post(object):
     def POST(self):
         form = web.input(poster='', title='', syntax='', body='')
         if form.body.strip() == '':
-            web.seeother('/')
+            return web.seeother('/')
         if form.syntax == '':
             syntax = highlighting.guess_lexer_alias(form.body)
         else:
@@ -61,7 +61,7 @@ class Post(object):
             form.title.strip(),
             form.body,
             syntax)
-        web.seeother('/%d' % (paste_id,))
+        return web.seeother('/%d' % (paste_id,))
 
 
 class Show(object):
@@ -89,7 +89,7 @@ class Show(object):
         form = web.input(poster='', body='')
         if form.body.strip() != '':
             db.add_comment(paste_id, form.poster, form.body)
-        web.seeother('/%s' % (paste_id,))
+        return web.seeother('/%s' % (paste_id,))
 
 
 class ShowRaw(object):
