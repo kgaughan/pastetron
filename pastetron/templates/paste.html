@@ -9,7 +9,7 @@ $var title: $:title
 
 $for comment in comments:
 	<div class="comment">
-		<p><strong>$comment['poster']</strong> wrote at <strong>$created</strong>:</p>
+		<p><strong>$comment['poster']</strong> wrote at <strong>$comment['created']</strong>:</p>
 		$:creole2html(comment['body'])
 	</div>
 
