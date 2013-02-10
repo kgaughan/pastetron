@@ -32,6 +32,9 @@ render = web.template.render(
 
 
 class Index(object):
+    """
+    Index of all pastes.
+    """
 
     def GET(self, page_num):
         mime_type = utils.get_preferred_mimetype(
@@ -42,6 +45,9 @@ class Index(object):
         return web.notacceptable()
 
     def index(self, page_num):
+        """
+        Render the HTML form of the index.
+        """
         page_count = db.get_page_count()
         if 0 >= page_num > page_count:
             return web.notfound('No such page.')
@@ -52,6 +58,9 @@ class Index(object):
 
 
 class Post(object):
+    """
+    Form for posting up a new paste.
+    """
 
     def GET(self):
         return render.post()
@@ -73,6 +82,9 @@ class Post(object):
 
 
 class Show(object):
+    """
+    Show a paste and post comments on the paste.
+    """
 
     def GET(self, paste_id):
         row = db.get_paste(paste_id)
@@ -101,6 +113,9 @@ class Show(object):
 
 
 class ShowRaw(object):
+    """
+    Show a raw paste.
+    """
 
     def GET(self, paste_id):
         row = db.get_paste(paste_id)
@@ -110,6 +125,9 @@ class ShowRaw(object):
 
 
 class Stylesheet(object):
+    """
+    Generate the Pygments stylesheet.
+    """
 
     def GET(self):
         return highlighting.get_stylesheet()

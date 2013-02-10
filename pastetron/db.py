@@ -62,6 +62,7 @@ def get_comments(paste_id):
 
 def get_page_count():
     """
+    Get number of pages needed to list all pastes.
     """
     n_pastes = dbkit.query_value("SELECT COUNT(*) FROM pastes")
     if n_pastes == 0:
@@ -71,6 +72,7 @@ def get_page_count():
 
 def get_paste_list(page):
     """
+    Get the list of pastes for the given page.
     """
     start = (page - 1) * constants.PASTES_PER_PAGE
     return dbkit.query("""
