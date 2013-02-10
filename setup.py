@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 from buildkit import *
 
 
-META = get_metadata('pastetron/__init__.py')
+META = get_metadata('pastetron/version.py')
 
 
 setup(

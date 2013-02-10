@@ -2,13 +2,9 @@
 Pastetron - A pastebin application.
 """
 
-import pastetron.views
 import pastetron.bootstrap
-
-
-__version__ = '0.1.0'
-__author__ = 'Keith Gaughan'
-__email__ = 'k@stereochro.me'
+import pastetron.views
+from pastetron.version import *  # pylint: disable-msg=W0401
 
 
 def paste(global_config, **settings):
