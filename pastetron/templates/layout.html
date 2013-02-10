@@ -3,15 +3,15 @@ $def with (content)
 <html>
 	<head>
 		<title>$content.title - Pastetron</title>
-		<link rel="stylesheet" type="text/css" media="all" href="/pygments.css">
+		<link rel="stylesheet" type="text/css" media="all" href="$url('/pygments.css')">
 		$for name in ('all', 'screen', 'print'):
-			<link rel="stylesheet" type="text/css" media="$name" href="/static/${name}.css">
+			<link rel="stylesheet" type="text/css" media="$name" href="$url('/static/%s.css' % name)">
 	</head>
 	<body>
 		<div class="nav">
 			<ul>
-				<li class="primary"><a href="/">Home</a></li>
-				<li><a href="/pastes/1">Index</a></li>
+				<li class="primary"><a href="$url('/')">Home</a></li>
+				<li><a href="$url('/pastes/1')">Index</a></li>
 			</ul>
 		</div>
 		<h1><span>Pastetron:</span> $content.title</h1>

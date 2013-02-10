@@ -23,9 +23,10 @@ render = web.template.render(
     os.path.join(os.path.dirname(__file__), 'templates'),
     base='layout',
     globals={
-        'lexers': highlighting.LEXERS,
         'creole2html': creole.creole2html,
+        'lexers': highlighting.LEXERS,
         'paginator': pagination.paginator,
+        'url': web.url,
     }
 )
 
@@ -51,7 +52,7 @@ class Post(object):
     def POST(self):
         form = web.input(poster='', title='', syntax='', body='')
         if form.body.strip() == '':
-            return web.seeother('/')
+            return web.seeother(web.url('/'))
         if form.syntax == '':
             syntax = highlighting.guess_lexer_alias(form.body)
         else:
@@ -61,7 +62,7 @@ class Post(object):
             form.title.strip(),
             form.body,
             syntax)
-        return web.seeother('/%d' % (paste_id,))
+        return web.seeother(web.url('/%d' % (paste_id,)))
 
 
 class Show(object):
