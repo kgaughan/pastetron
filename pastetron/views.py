@@ -7,7 +7,7 @@ import os.path
 import creole
 import web
 
-from pastetron import db, highlighting, pagination
+from pastetron import db, highlighting, pagination, utils
 
 
 urls = (
@@ -34,7 +34,14 @@ render = web.template.render(
 class Index(object):
 
     def GET(self, page_num):
-        page_num = int(page_num)
+        mime_type = utils.get_preferred_mimetype(
+            ('text/html',),
+            'text/html')
+        if mime_type == 'text/html':
+            return self.index(int(page_num))
+        return web.notacceptable()
+
+    def index(self, page_num):
         page_count = db.get_page_count()
         if 0 >= page_num > page_count:
             return web.notfound('No such page.')
