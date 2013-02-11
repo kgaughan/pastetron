@@ -78,6 +78,18 @@ def get_paste_list(page):
     return dbkit.query("""
         SELECT   paste_id, title, poster, created
         FROM     pastes
-        ORDER BY created
+        ORDER BY created ASC
         LIMIT    ?, ?
         """, (start, constants.PASTES_PER_PAGE))
+
+
+def get_latest_pastes():
+    """
+    Get the most recently posted pastes.
+    """
+    return dbkit.query("""
+        SELECT   paste_id, title, created, poster, body
+        FROM     pastes
+        ORDER BY created DESC
+        LIMIT    1, ?
+        """, (constants.PASTES_PER_PAGE,))

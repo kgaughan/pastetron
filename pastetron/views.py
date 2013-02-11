@@ -7,7 +7,7 @@ import os.path
 import creole
 import web
 
-from pastetron import db, highlighting, pagination, utils
+from pastetron import db, feed, highlighting, pagination, utils
 
 
 urls = (
@@ -38,12 +38,14 @@ class Index(object):
 
     def GET(self, page_num=None):
         mime_type = utils.get_preferred_mimetype(
-            ('text/html',),
+            ('text/html', 'application/atom+xml'),
             'text/html')
         if mime_type == 'text/html':
             if page_num is None:
                 return web.seeother(web.url('/pastes/1'))
             return self.index(int(page_num))
+        if mime_type == 'application/atom+xml':
+            return self.feed()
         # Should never be called.
         return web.notacceptable()
 
@@ -58,6 +60,10 @@ class Index(object):
             page_num=page_num,
             page_count=page_count,
             pastes=db.get_paste_list(page_num))
+
+    def feed(self):
+        web.header('Content-Type', 'application/atom+xml', unique=True)
+        return feed.generate_feed(db.get_latest_pastes())
 
 
 class Post(object):
