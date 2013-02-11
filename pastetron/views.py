@@ -14,7 +14,7 @@ urls = (
     r'/', 'Post',
     r'/(\d+)', 'Show',
     r'/(\d+)/raw', 'ShowRaw',
-    r'/pastes/(\d+)', 'Index',
+    r'/pastes/(\d+)?', 'Index',
     r'/pygments.css', 'Stylesheet',
 )
 
@@ -36,12 +36,15 @@ class Index(object):
     Index of all pastes.
     """
 
-    def GET(self, page_num):
+    def GET(self, page_num=None):
         mime_type = utils.get_preferred_mimetype(
             ('text/html',),
             'text/html')
         if mime_type == 'text/html':
+            if page_num is None:
+                return web.seeother(web.url('/pastes/1'))
             return self.index(int(page_num))
+        # Should never be called.
         return web.notacceptable()
 
     def index(self, page_num):
@@ -121,6 +124,7 @@ class ShowRaw(object):
         row = db.get_paste(paste_id)
         if row is None:
             return web.notfound('No such paste.')
+        web.header('Content-Type', 'text/plain', unique=True)
         return row['body']
 
 
@@ -130,4 +134,5 @@ class Stylesheet(object):
     """
 
     def GET(self):
+        web.header('Content-Type', 'text/css', unique=True)
         return highlighting.get_stylesheet()
