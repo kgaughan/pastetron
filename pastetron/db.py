@@ -91,5 +91,5 @@ def get_latest_pastes():
         SELECT   paste_id, title, created, poster, body
         FROM     pastes
         ORDER BY created DESC
-        LIMIT    1, ?
+        LIMIT    ?
         """, (constants.PASTES_PER_PAGE,))
