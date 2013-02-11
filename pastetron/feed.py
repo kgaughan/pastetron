@@ -73,7 +73,10 @@ def build_entry(tb, id_, entry):
     Build an Atom feed entry.
     """
     with nesting(tb, 'entry'):
-        tag(tb, 'title', entry['title'])
+        title = entry['title']
+        if title == '':
+            title = 'Paste #%d' % entry['paste_id']
+        tag(tb, 'title', title)
         link = '%s/%d' % (web.ctx.realhome, entry['paste_id'])
         tag(tb, 'link', rel='alternate', type='text/html', href=link)
         tag(tb, 'id', '%s:p%d' % (id_, entry['paste_id']))
