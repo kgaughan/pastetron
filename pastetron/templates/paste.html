@@ -7,11 +7,13 @@ $var title: $:title
 	<p class="tools"><a href="$url('/%s/raw' % paste_id)">Download raw text</a></p>
 </div>
 
+<div class="comments">
 $for comment in comments:
 	<div class="comment">
-		<p><strong>$comment['poster']</strong> wrote on <strong>$human(comment['created'])</strong>:</p>
+		<p class="comment-head"><strong>$comment['poster']</strong> wrote on <strong>$human(comment['created'])</strong>:</p>
 		$:creole2html(comment['body'])
 	</div>
+</div>
 
 <form method="post" action="$url()">
 	<div>
