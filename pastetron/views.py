@@ -2,6 +2,7 @@
 Application views and routes.
 """
 
+import functools
 import os.path
 
 import creole
@@ -28,6 +29,7 @@ render = web.template.render(
         'paginator': pagination.paginator,
         'url': web.url,
         'date': utils.date,
+        'human': functools.partial(utils.date, fmt='%B %d, %Y at %H:%M'),
     }
 )
 
