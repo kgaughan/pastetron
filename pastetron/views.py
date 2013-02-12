@@ -27,6 +27,7 @@ render = web.template.render(
         'lexers': highlighting.LEXERS,
         'paginator': pagination.paginator,
         'url': web.url,
+        'date': utils.date,
     }
 )
 
@@ -62,8 +63,11 @@ class Index(object):
             pastes=db.get_paste_list(page_num))
 
     def feed(self):
+        response = feed.generate_feed(db.get_latest_pastes())
+        if response is None:
+            return web.notfound('No feed.')
         web.header('Content-Type', 'application/atom+xml', unique=True)
-        return feed.generate_feed(db.get_latest_pastes())
+        return response
 
 
 class Post(object):

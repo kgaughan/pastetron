@@ -40,11 +40,18 @@ def generate_feed(entries):
     """
     Generate an Atom feed.
     """
+    entries = list(entries)
+    if len(entries) == 0:
+        return None
+
+    # Get the update date. Assumption: most recent entry is first.
+    updated = entries[0]['created']
+
     tb = et.TreeBuilder()
     build_feed(
         tb,
         web.config.app.title,
-        'now',
+        updated,
         web.config.app.tag_uri,
         entries)
     return et.tostring(tb.close(), 'UTF-8')
@@ -58,7 +65,7 @@ def build_feed(tb, title, updated, id_, entries):
         tag(tb, 'title', title)
         tag(tb, 'link', href=web.ctx.realhome + '/pastes/', rel='self')
         tag(tb, 'link', href=web.ctx.realhome + '/', rel='alternate')
-        tag(tb, 'updated', updated)
+        tag(tb, 'updated', utils.date(updated))
         tag(tb, 'id', id_)
         tag(
             tb, 'generator', 'Pastetron',
@@ -80,8 +87,8 @@ def build_entry(tb, id_, entry):
         link = '%s/%d' % (web.ctx.realhome, entry['paste_id'])
         tag(tb, 'link', rel='alternate', type='text/html', href=link)
         tag(tb, 'id', '%s:p%d' % (id_, entry['paste_id']))
-        tag(tb, 'published', entry['created'])
-        tag(tb, 'updated', entry['created'])
+        tag(tb, 'published', utils.date(entry['created']))
+        tag(tb, 'updated', utils.date(entry['created']))
         with nesting(tb, 'author'):
             tag(tb, 'name', entry['poster'])
         tag(tb, 'content', entry['body'], type='text')

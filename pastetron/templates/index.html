@@ -19,7 +19,7 @@ $var title: Index of pastes
 					<a href="$url('/%d' % paste['paste_id'])">$paste['title']</a>
 			</td>
 			<td>$paste['poster']</td>
-			<td>$paste['created']</td>
+			<td>$date(paste['created'], '%B %d, %Y at %H:%M')</td>
 		</tr>
 	</tbody>
 </table>
