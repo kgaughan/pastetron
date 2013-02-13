@@ -36,3 +36,18 @@ def date(timestamp, fmt=None, tz=None):
     if tz is not None:
         dt = dt.astimezone(tz)
     return dt.strftime(fmt)
+
+
+def get_poster():
+    """
+    Gets the poster name from a cookie.
+    """
+    return web.cookies(poster='Anonymous').poster
+
+
+def save_poster(poster):
+    """
+    Save the given poster name for seven days.
+    """
+    seven_days = 60 * 60 * 24 * 7
+    web.setcookie('poster', poster, expires=seven_days)

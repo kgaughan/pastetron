@@ -81,10 +81,11 @@ class Post(object):
     """
 
     def GET(self):
-        return render.post()
+        return render.post(user=utils.get_poster())
 
     def POST(self):
-        form = web.input(poster='', title='', syntax='', body='')
+        form = web.input(poster='Anonymous', title='', syntax='', body='')
+        utils.save_poster(form.poster)
         if form.body.strip() == '':
             return web.seeother(web.url('/'))
         if form.syntax == '':
@@ -121,10 +122,12 @@ class Show(object):
             body=formatted,
             syntax=highlighting.ALIAS_TO_NAME[row['syntax']],
             comments=comments,
+            user=utils.get_poster(),
         )
 
     def POST(self, paste_id):
-        form = web.input(poster='', body='')
+        form = web.input(poster='Anonymous', body='')
+        utils.save_poster(form.poster)
         if form.body.strip() != '':
             db.add_comment(paste_id, form.poster, form.body)
         return web.seeother('/%s' % (paste_id,))

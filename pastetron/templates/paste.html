@@ -1,4 +1,4 @@
-$def with (paste_id, created, poster, title, body, syntax, comments)
+$def with (paste_id, created, poster, title, body, syntax, comments, user)
 $var title: $:title
 
 <div class="paste">
@@ -19,7 +19,7 @@ $for comment in comments:
 	<div>
 		<label>
 			<strong>Your name</strong>
-			<input type="text" name="poster" value="" size="40">
+			<input type="text" name="poster" value="$user" size="40">
 		</label>
 	</div>
 	<div>

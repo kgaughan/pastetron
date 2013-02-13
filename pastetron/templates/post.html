@@ -1,11 +1,11 @@
-$def with (poster="Anonymous", syntax='', body='')
+$def with (user='', syntax='', body='')
 $var title: New paste
 
 <form method="post" action="$url()">
 	<div>
 		<label>
 			<strong>Your name</strong>
-			<input type="text" name="poster" value="$poster" size="40">
+			<input type="text" name="poster" value="$user" size="40">
 		</label>
 	</div>
 	<div>
