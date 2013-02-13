@@ -68,7 +68,10 @@ class Index(object):
         response = feed.generate_feed(db.get_latest_pastes())
         if response is None:
             return web.notfound('No feed.')
-        web.header('Content-Type', 'application/atom+xml', unique=True)
+        web.header(
+            'Content-Type',
+            'application/atom+xml; charset=utf-8',
+            unique=True)
         return response
 
 
@@ -136,7 +139,7 @@ class ShowRaw(object):
         row = db.get_paste(paste_id)
         if row is None:
             return web.notfound('No such paste.')
-        web.header('Content-Type', 'text/plain', unique=True)
+        web.header('Content-Type', 'text/plain; charset=utf-8', unique=True)
         return row['body']
 
 
@@ -146,5 +149,5 @@ class Stylesheet(object):
     """
 
     def GET(self):
-        web.header('Content-Type', 'text/css', unique=True)
+        web.header('Content-Type', 'text/css; charset=utf-8', unique=True)
         return highlighting.get_stylesheet()
