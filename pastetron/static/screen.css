@@ -170,8 +170,14 @@ form textarea {
 	   of within something other than a user stylesheet. */
 	width: 100% !important;
 }
+form label {
+	margin-left: 7em;
+	display: block;
+}
 form label strong {
+	float: left;
 	display: inline-block;
-	width: 6em;
+	width: 6.75em;
+	margin-left: -7em;
 	text-align: right;
 }
