@@ -1,6 +1,4 @@
- * Recording of the name field in a cookie.
  * Password protection (AES256+CTR+HMAC)
- * Feed of most recent 
  * Gravatars (requires email addresses)
  * Optional authentication
  * Preview
