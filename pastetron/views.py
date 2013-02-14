@@ -88,15 +88,11 @@ class Post(object):
         form = web.input(
             poster=utils.get_default_name(),
             title='',
-            syntax='',
+            syntax='text',
             body='')
         utils.save_poster(form.poster)
         if form.body.strip() == '':
             return web.seeother(web.url('/'))
-        if form.syntax == '':
-            syntax = highlighting.guess_lexer_alias(form.body)
-        else:
-            syntax = form.syntax
         paste_id = db.add_paste(
             form.poster,
             form.title.strip(),
