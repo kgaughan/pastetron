@@ -24,6 +24,7 @@ render = web.template.render(
     os.path.join(os.path.dirname(__file__), 'templates'),
     base='layout',
     globals={
+        'get_site_name': utils.get_site_name,
         'creole2html': creole.creole2html,
         'lexers': highlighting.LEXERS,
         'paginator': pagination.paginator,
@@ -84,7 +85,11 @@ class Post(object):
         return render.post(user=utils.get_poster())
 
     def POST(self):
-        form = web.input(poster='Anonymous', title='', syntax='', body='')
+        form = web.input(
+            poster=utils.get_default_name(),
+            title='',
+            syntax='',
+            body='')
         utils.save_poster(form.poster)
         if form.body.strip() == '':
             return web.seeother(web.url('/'))
@@ -126,7 +131,9 @@ class Show(object):
         )
 
     def POST(self, paste_id):
-        form = web.input(poster='Anonymous', body='')
+        form = web.input(
+            poster=utils.get_default_name(),
+            body='')
         utils.save_poster(form.poster)
         if form.body.strip() != '':
             db.add_comment(paste_id, form.poster, form.body)

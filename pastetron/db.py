@@ -4,7 +4,7 @@ Database interface code.
 
 import dbkit
 
-from pastetron import constants
+from pastetron import utils
 
 
 @dbkit.transactional
@@ -67,20 +67,20 @@ def get_page_count():
     n_pastes = dbkit.query_value("SELECT COUNT(*) FROM pastes")
     if n_pastes == 0:
         return 0
-    return (n_pastes / constants.PASTES_PER_PAGE) + 1
+    return (n_pastes / utils.get_page_length()) + 1
 
 
 def get_paste_list(page):
     """
     Get the list of pastes for the given page.
     """
-    start = (page - 1) * constants.PASTES_PER_PAGE
+    start = (page - 1) * utils.get_page_length()
     return dbkit.query("""
         SELECT   paste_id, title, poster, created
         FROM     pastes
         ORDER BY created ASC
         LIMIT    ?, ?
-        """, (start, constants.PASTES_PER_PAGE))
+        """, (start, utils.get_page_length()))
 
 
 def get_latest_pastes():
@@ -92,4 +92,4 @@ def get_latest_pastes():
         FROM     pastes
         ORDER BY created DESC
         LIMIT    ?
-        """, (constants.PASTES_PER_PAGE,))
+        """, (utils.get_page_length(),))

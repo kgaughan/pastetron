@@ -8,6 +8,27 @@ import mimeparse
 import web
 
 
+def get_default_name():
+    """
+    Get the site name from the configuration.
+    """
+    return web.config.app.get('default_author', 'Anonymous')
+
+
+def get_site_name():
+    """
+    Get the site name from the configuration.
+    """
+    return web.config.app.get('site_name', 'Pastetron:')
+
+
+def get_page_length():
+    """
+    Get number of items to display per page.
+    """
+    return int(web.config.app.get('pastes_per_page', 20))
+
+
 def get_preferred_mimetype(acceptable, default):
     """
     Gets the preferred MIME type to use for rendering the response based on
@@ -42,7 +63,7 @@ def get_poster():
     """
     Gets the poster name from a cookie.
     """
-    return web.cookies(poster='Anonymous').poster
+    return web.cookies(poster=get_default_name()).poster
 
 
 def save_poster(poster):

@@ -15,7 +15,7 @@ $def with (content)
 				<li><a href="$url('/pastes/')">Index</a></li>
 			</ul>
 		</div>
-		<h1><span>Pastetron:</span> $content.title</h1>
+		<h1><span>$get_site_name()</span> $content.title</h1>
 		<div class="content">$:content</div>
 	</body>
 </html>
