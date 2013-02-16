@@ -1,2 +1,20 @@
 **pastetron** is a pastebin. It's intended for private use or within an
 organisation.
+
+:Author:
+    Keith Gaughan (http://stereochro.me)
+
+:Repo:
+    https://github.com/kgaughan/pastetron
+
+
+Overview
+========
+
+*pastetron* is a very simple pastebin_ application. It supports syntax
+highlighting, comments, and has a feed of recently posted pastes.
+
+It (currently) has no build-in authentication or CSRF prevention support, so
+is only intended for private use or use within an organisation.
+
+.. _pastebin: http://en.wikipedia.org/wiki/Pastebin
