@@ -6,34 +6,13 @@ from __future__ import with_statement
 
 import contextlib
 try:
-    import xml.etree.cElementTree as et
+    import cStringIO as stringio
 except:  # pylint: disable-msg=W0702
-    import xml.etree.ElementTree as et
+    import StringIO as stringio
 
 import web
 
 from pastetron import version, utils
-
-
-@contextlib.contextmanager
-def nesting(tb, tag_, **attrs):
-    """
-    Generates an element containing nested elements within the given
-    `TreeBuilder` stream.
-    """
-    tb.start(tag_, attrs)
-    yield
-    tb.end(tag_)
-
-
-def tag(tb, tag_, *values, **attrs):
-    """
-    Generates a simple element in the given `TreeBuilder` stream.
-    """
-    tb.start(tag_, attrs)
-    for value in values:
-        tb.data(value)
-    tb.end(tag_)
 
 
 def generate_feed(entries):
@@ -47,48 +26,49 @@ def generate_feed(entries):
     # Get the update date. Assumption: most recent entry is first.
     updated = entries[0]['created']
 
-    tb = et.TreeBuilder()
-    build_feed(
-        tb,
-        web.config.app.title,
-        updated,
-        web.config.app.tag_uri,
-        entries)
-    return et.tostring(tb.close(), 'UTF-8')
+    with contextlib.closing(stringio.StringIO()) as out:
+        builder = utils.XMLBuilder(out)
+        build_feed(
+            builder,
+            web.config.app.site_name,
+            updated,
+            web.config.app.tag_uri,
+            entries)
+        return out.getvalue()
 
 
-def build_feed(tb, title, updated, id_, entries):
+def build_feed(builder, title, updated, id_, entries):
     """
-    Build an Atom feed. Requires a `TreeBuilder` to build the feed with.
+    Build an Atom feed. Requires an `XMLBuilder` to build the feed with.
     """
-    with nesting(tb, 'feed', xmlns='http://www.w3.org/2005/Atom'):
-        tag(tb, 'title', title)
-        tag(tb, 'link', href=web.ctx.realhome + '/pastes/', rel='self')
-        tag(tb, 'link', href=web.ctx.realhome + '/', rel='alternate')
-        tag(tb, 'updated', utils.date(updated))
-        tag(tb, 'id', id_)
-        tag(
-            tb, 'generator', 'Pastetron',
+    with builder.within('feed', xmlns='http://www.w3.org/2005/Atom'):
+        builder.tag('title', title)
+        builder.tag('link', href=web.ctx.realhome + '/pastes/', rel='self')
+        builder.tag('link', href=web.ctx.realhome + '/', rel='alternate')
+        builder.tag('updated', utils.date(updated))
+        builder.tag('id', id_)
+        builder.tag(
+            'generator', 'Pastetron',
             uri='https://github.com/kgaughan/pastetron',
             version=version.__version__)
         for entry in entries:
-            build_entry(tb, id_, entry)
+            build_entry(builder, id_, entry)
 
 
-def build_entry(tb, id_, entry):
+def build_entry(builder, id_, entry):
     """
     Build an Atom feed entry.
     """
-    with nesting(tb, 'entry'):
+    with builder.within('entry'):
         title = entry['title']
         if title == '':
             title = 'Paste #%d' % entry['paste_id']
-        tag(tb, 'title', title)
+        builder.tag('title', title)
         link = '%s/%d' % (web.ctx.realhome, entry['paste_id'])
-        tag(tb, 'link', rel='alternate', type='text/html', href=link)
-        tag(tb, 'id', '%s:p%d' % (id_, entry['paste_id']))
-        tag(tb, 'published', utils.date(entry['created']))
-        tag(tb, 'updated', utils.date(entry['created']))
-        with nesting(tb, 'author'):
-            tag(tb, 'name', entry['poster'])
-        tag(tb, 'content', entry['body'], type='text')
+        builder.tag('link', rel='alternate', type='text/html', href=link)
+        builder.tag('id', '%s:p%d' % (id_, entry['paste_id']))
+        builder.tag('published', utils.date(entry['created']))
+        builder.tag('updated', utils.date(entry['created']))
+        with builder.within('author'):
+            builder.tag('name', entry['poster'])
+        builder.tag('content', entry['body'], type='text')
