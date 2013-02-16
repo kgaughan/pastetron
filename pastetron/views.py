@@ -97,7 +97,7 @@ class Post(object):
             form.poster,
             form.title.strip(),
             form.body,
-            syntax)
+            form.syntax)
         return web.seeother(web.url('/%d' % (paste_id,)))
 
 
