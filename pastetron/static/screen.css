@@ -90,7 +90,8 @@ h1 span {
 	text-align: right;
 }
 
-.content table.pastes {
+.content table.pastes,
+.content table.csv {
 	width: 100%;
 	border-top: 1px solid #DDD;
 	border-collapse: collapse;
@@ -99,9 +100,26 @@ h1 span {
 .content table.pastes tr {
 	border-bottom: 1px solid #DDD;
 }
-
 .content table.pastes thead {
 	background: #EEE;
+}
+
+.content table.csv {
+	margin: 1em 0;
+	border-top: 1px solid #CCC;
+}
+.content table.csv tr {
+	border-bottom: 1px solid #CCC;
+}
+.content table.csv thead {
+	background: #DDD;
+}
+
+.content .creole {
+	border: 1px solid #DDD;
+	background: white;
+	padding: 1em;
+	margin: 1em 0;
 }
 
 .content .comment {
@@ -130,7 +148,10 @@ th, td {
 	text-align: left;
 }
 
-.content table.pastes th, .content table.pastes td {
+.content table.pastes th,
+.content table.pastes td,
+.content table.csv th,
+.content table.csv td {
 	padding: 0.125ex 0.25ex 0.5ex 0.25ex;
 }
 
