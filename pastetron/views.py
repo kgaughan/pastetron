@@ -15,7 +15,7 @@ urls = (
     r'/', 'Post',
     r'/(\d+)', 'Show',
     r'/(\d+)/raw', 'ShowRaw',
-    r'/pastes/(\d+)?', 'Index',
+    r'/pastes/(\d+)?', 'Recent',
     r'/pygments.css', 'Stylesheet',
 )
 
@@ -36,9 +36,9 @@ render = web.template.render(
 )
 
 
-class Index(object):
+class Recent(object):
     """
-    Index of all pastes.
+    Index of all pastes, from most recent to oldest.
     """
 
     def GET(self, page_num=None):
@@ -48,20 +48,20 @@ class Index(object):
         if mime_type == 'text/html':
             if page_num is None:
                 return web.seeother(web.url('/pastes/1'))
-            return self.index(int(page_num))
+            return self.recent(int(page_num))
         if mime_type == 'application/atom+xml':
             return self.feed()
         # Should never be called.
         return web.notacceptable()
 
-    def index(self, page_num):
+    def recent(self, page_num):
         """
         Render the HTML form of the index.
         """
         page_count = db.get_page_count()
         if 0 >= page_num > page_count:
             return web.notfound('No such page.')
-        return render.index(
+        return render.recent(
             page_num=page_num,
             page_count=page_count,
             pastes=db.get_paste_list(page_num))

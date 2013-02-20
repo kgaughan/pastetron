@@ -78,7 +78,7 @@ def get_paste_list(page):
     return dbkit.query("""
         SELECT   paste_id, title, poster, created
         FROM     pastes
-        ORDER BY created ASC
+        ORDER BY created DESC
         LIMIT    ?, ?
         """, (start, utils.get_page_length()))
 
