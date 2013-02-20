@@ -32,6 +32,7 @@ render = web.template.render(
         'date': utils.date,
         'human': functools.partial(utils.date, fmt='%B %d, %Y at %H:%M'),
         'captcha': utils.make_captcha_markup,
+        'highlight': highlighting.highlight,
     }
 )
 
@@ -90,15 +91,19 @@ class Post(object):
             poster=utils.get_default_name(),
             title='',
             syntax='text',
-            body='')
+            body='',
+            do_preview=None,
+        )
         is_valid, error = utils.check_captcha(web.ctx['ip'], form)
-        if not is_valid:
+        if not is_valid or form.do_preview is not None:
             return render.post(
                 user=form.poster,
                 title=form.title,
                 syntax=form.syntax,
                 body=form.body,
-                captcha_error=error)
+                captcha_error=error,
+                preview=form.do_preview is not None,
+            )
         utils.save_poster(form.poster)
         if form.body.strip() == '':
             return web.seeother(web.url('/'))
@@ -106,7 +111,8 @@ class Post(object):
             form.poster,
             form.title.strip(),
             form.body,
-            form.syntax)
+            form.syntax,
+        )
         return web.seeother(web.url('/%d' % (paste_id,)))
 
 
@@ -132,8 +138,8 @@ class Show(object):
             created=row['created'],
             poster=row['poster'],
             title=title,
-            body=formatted,
-            syntax=highlighting.ALIAS_TO_NAME[row['syntax']],
+            body=row['body'],
+            syntax=row['syntax'],
             comments=comments,
             user=utils.get_poster(),
             comment=comment,

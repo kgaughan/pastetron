@@ -3,7 +3,7 @@ $var title: $:title
 
 <div class="paste">
 	<p>Pasted by <strong>$poster</strong> on <strong>$human(created)</strong>:</p>
-	<div>$:body</div>
+	<div>$:highlight(body, syntax)</div>
 	<p class="tools"><a href="$url('/%s/raw' % paste_id)">Download raw text</a></p>
 </div>
 

@@ -1,5 +1,11 @@
-$def with (user='', title='', syntax='text', body='', captcha_error=None)
+$def with (user='', title='', syntax='text', body='', captcha_error=None, preview=False)
 $var title: New paste
+
+$if preview:
+	<div class="paste">
+		<p>Preview:</p>
+		<div>$:highlight(body, syntax)</div>
+	</div>
 
 <form method="post" action="$url()">
 	<div>
@@ -31,6 +37,7 @@ $var title: New paste
 	</div>
 	<div>$:captcha(captcha_error)</div>
 	<div>
-		<input type="submit" value="Paste!">
+		<input type="submit" name="do_paste" value="Paste!">
+		<input type="submit" name="do_preview" value="Preview!">
 	</div>
 </form>

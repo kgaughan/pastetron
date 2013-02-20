@@ -1,4 +1,3 @@
  * Password protection (AES256+CTR+HMAC)
  * Gravatars (requires email addresses)
  * Optional authentication
- * Preview
