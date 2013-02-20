@@ -1,4 +1,4 @@
-$def with (paste_id, created, poster, title, body, syntax, comments, user)
+$def with (paste_id, created, poster, title, body, syntax, comments, user, comment='', captcha_error=None)
 $var title: $:title
 
 <div class="paste">
@@ -8,10 +8,10 @@ $var title: $:title
 </div>
 
 <div class="comments">
-$for comment in comments:
+$for c in comments:
 	<div class="comment">
-		<p class="comment-head"><strong>$comment['poster']</strong> wrote on <strong>$human(comment['created'])</strong>:</p>
-		$:creole2html(comment['body'])
+		<p class="comment-head"><strong>$c.poster</strong> wrote on <strong>$human(c.created)</strong>:</p>
+		$:creole2html(c.body)
 	</div>
 </div>
 
@@ -23,7 +23,9 @@ $for comment in comments:
 		</label>
 	</div>
 	<div>
-		<textarea rows="10" name="body"></textarea>
+		<textarea rows="10" name="body">$comment</textarea>
+	</div>
+	<div>$:captcha(captcha_error)</div>
 	<div>
 		<input type="submit" value="Comment!">
 		<strong>Hey!</strong> You can use

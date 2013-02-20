@@ -1,4 +1,4 @@
-$def with (user='', syntax='text', body='')
+$def with (user='', title='', syntax='text', body='', captcha_error=None)
 $var title: New paste
 
 <form method="post" action="$url()">
@@ -11,7 +11,7 @@ $var title: New paste
 	<div>
 		<label>
 			<strong>Title</strong>
-			<input type="text" name="title" value="" size="40">
+			<input type="text" name="title" value="$title" size="40">
 		</label>
 	</div>
 	<div>
@@ -29,6 +29,7 @@ $var title: New paste
 	<div>
 		<textarea rows="20" name="body">$body</textarea>
 	</div>
+	<div>$:captcha(captcha_error)</div>
 	<div>
 		<input type="submit" value="Paste!">
 	</div>

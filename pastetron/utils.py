@@ -9,6 +9,8 @@ from xml.sax import saxutils
 import mimeparse
 import web
 
+from pastetron import recaptcha
+
 
 class XMLBuilder(object):
     """
@@ -102,3 +104,26 @@ def save_poster(poster):
     """
     seven_days = 60 * 60 * 24 * 7
     web.setcookie('poster', poster, expires=seven_days)
+
+
+def make_captcha_markup(error=None):
+    """
+    reCAPTCHA wrapper: generate CAPTCHA markup.
+    """
+    if 'recaptcha_public_key' not in web.config.app:
+        return ''
+    return recaptcha.make_markup(web.config.app.recaptcha_public_key, error)
+
+
+def check_captcha(remote_ip, fields):
+    """
+    reCAPTCHA wrapper: check the CAPTCHA response.
+    """
+    # If reCAPTCHA support isn't enabled, it always validates.
+    if 'recaptcha_private_key' not in web.config.app:
+        return (True, '')
+    return recaptcha.check(
+        web.config.app.recaptcha_private_key,
+        remote_ip,
+        fields.get('recaptcha_challenge_field', ''),
+        fields.get('recaptcha_response_field', ''))

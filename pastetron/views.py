@@ -31,6 +31,7 @@ render = web.template.render(
         'url': web.url,
         'date': utils.date,
         'human': functools.partial(utils.date, fmt='%B %d, %Y at %H:%M'),
+        'captcha': utils.make_captcha_markup,
     }
 )
 
@@ -90,6 +91,14 @@ class Post(object):
             title='',
             syntax='text',
             body='')
+        is_valid, error = utils.check_captcha(web.ctx['ip'], form)
+        if not is_valid:
+            return render.post(
+                user=form.poster,
+                title=form.title,
+                syntax=form.syntax,
+                body=form.body,
+                captcha_error=error)
         utils.save_poster(form.poster)
         if form.body.strip() == '':
             return web.seeother(web.url('/'))
@@ -107,6 +116,9 @@ class Show(object):
     """
 
     def GET(self, paste_id):
+        return self.show_paste(paste_id)
+
+    def show_paste(self, paste_id, comment='', captcha_error=None):
         row = db.get_paste(paste_id)
         if row is None:
             return web.notfound('No such paste.')
@@ -124,12 +136,17 @@ class Show(object):
             syntax=highlighting.ALIAS_TO_NAME[row['syntax']],
             comments=comments,
             user=utils.get_poster(),
+            comment=comment,
+            captcha_error=captcha_error,
         )
 
     def POST(self, paste_id):
         form = web.input(
             poster=utils.get_default_name(),
             body='')
+        is_valid, captcha_error = utils.check_captcha(web.ctx['ip'], form)
+        if not is_valid:
+            return self.show_paste(paste_id, form.body, captcha_error)
         utils.save_poster(form.poster)
         if form.body.strip() != '':
             db.add_comment(paste_id, form.poster, form.body)
