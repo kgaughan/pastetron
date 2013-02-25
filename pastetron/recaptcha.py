@@ -43,9 +43,11 @@ __email__ = 'k@stereochro.me'
 
 
 MARKUP = """
-<script type="text/javascript" src="//www.google.com/recaptcha/api/challenge?%(params)s"></script>
+<script type="text/javascript"
+ src="//www.google.com/recaptcha/api/challenge?%(params)s"></script>
 <noscript>
-<iframe src="//www.google.com/recaptcha/api/noscript?%(params)s" height="300" width="500" frameborder="0"></iframe><br>
+<iframe src="//www.google.com/recaptcha/api/noscript?%(params)s"
+ height="300" width="500" frameborder="0"></iframe><br>
 <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
 <input type="hidden" name="recaptcha_response_field" value="manual_challenge">
 </noscript>

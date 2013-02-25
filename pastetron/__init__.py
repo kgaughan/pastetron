@@ -4,7 +4,8 @@ Pastetron - A pastebin application.
 
 import pastetron.bootstrap
 import pastetron.views
-from pastetron.version import *  # pylint: disable-msg=W0401
+# pylint: disable-msg=W0401
+from pastetron.version import *  # flake8: noqa
 
 
 def paste(global_config, **settings):
