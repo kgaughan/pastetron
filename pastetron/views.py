@@ -131,7 +131,6 @@ class Show(object):
         title = row['title']
         if title == '':
             title = 'Paste #%s' % paste_id
-        formatted = highlighting.highlight(row['body'], row['syntax'])
         comments = db.get_comments(paste_id)
         return render.paste(
             paste_id=paste_id,
