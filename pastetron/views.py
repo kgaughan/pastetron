@@ -60,7 +60,7 @@ class Recent(object):
         Render the HTML form of the index.
         """
         page_count = db.get_page_count()
-        if 0 >= page_num > page_count:
+        if not (0 < page_num <= page_count):
             return web.notfound('No such page.')
         return render.recent(
             page_num=page_num,
