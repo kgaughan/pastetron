@@ -169,12 +169,12 @@ class _BasicAuth(Auth):
 
 class DigestAuth(Auth):
     """
-    Implements HTTP digest authentication (only RFC 2069 for now).
+    Implements HTTP digest authentication.
     """
 
     name = 'Digest'
 
-    expected = ('username', 'nonce', 'username', 'uri', 'response')
+    expected = ('username', 'nonce', 'uri', 'response', 'nc', 'cnonce', 'qop')
 
     def __init__(self, lifetime=60):
         super(DigestAuth, self).__init__()
@@ -186,6 +186,8 @@ class DigestAuth(Auth):
         send_header(self, {
             'realm': realm,
             'nonce': self._make_nonce(web.ctx.ip),
+            'algorithm': 'MD5',
+            'qop': 'auth',
             'stale': 'true' if stale else 'false',
         })
 
@@ -228,6 +230,8 @@ class DigestAuth(Auth):
         if nonce != fields['nonce']:
             raise StaleAuth
         ha2 = make_hash((web.ctx.method, fields['uri']))
+        ha2 = ':'.join((fields['nc'], fields['cnonce'], fields['qop'], ha2))
+        make_hash((web.ctx.method, fields['uri']))
         expected = self.make_response(ha1, nonce, ha2)
         return username, fields['response'] == expected
 
