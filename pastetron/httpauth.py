@@ -262,13 +262,6 @@ class AuthMediator(object):
         """
         return None
 
-    # pylint: disable=W0613,R0201
-    def check_wsse_credentials(self, username, digest, timestamp, nonce):
-        """
-        Check the given set of credentials against an authentication source.
-        """
-        return False
-
     # pylint: disable=R0201
     def is_valid_username(self, username):
         """
