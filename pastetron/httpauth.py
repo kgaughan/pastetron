@@ -56,28 +56,6 @@ def parse_fields(header):
         yield key, value
 
 
-def _get_header():
-    """
-    Get the value of the HTTP Authorization header, if present.
-    """
-    header = web.ctx.env.get('HTTP_AUTHORIZATION')
-    if header is None:
-        return None, None
-    parts = header.split(' ', 1)
-    if len(parts) == 1:
-        parts.append('')
-    return parts[0], parts[1]
-
-
-def send_header(method, fields):
-    """
-    Send a WWW-Authenticate header.
-    """
-    web.ctx.status = '401 Unauthorized'
-    header = '%s %s' % (method.name, join_fields(fields))
-    web.header('WWW-Authenticate', header)
-
-
 class Auth(object):
     """
     Base class for authentication methods.
@@ -92,6 +70,15 @@ class Auth(object):
         Issue a HTTP auth challenge.
         """
         pass
+
+    @staticmethod
+    def send_header(method, fields):
+        """
+        Send a WWW-Authenticate header.
+        """
+        web.ctx.status = '401 Unauthorized'
+        header = '%s %s' % (method.name, join_fields(fields))
+        web.header('WWW-Authenticate', header)
 
     def parse_header(self, data):
         """
@@ -156,7 +143,7 @@ class _BasicAuth(Auth):
     name = 'Basic'
 
     def challenge(self, realm, stale):
-        send_header(self, {'realm': realm})
+        self.send_header(self, {'realm': realm})
 
     def check(self, data, headers, mediator):
         try:
@@ -184,7 +171,7 @@ class DigestAuth(Auth):
         self.time = time.time
 
     def challenge(self, realm, stale):
-        send_header(self, {
+        self.send_header(self, {
             'realm': realm,
             'nonce': self._make_nonce(web.ctx.ip),
             'algorithm': 'MD5',
@@ -284,6 +271,9 @@ class AuthMediator(object):
 
     # pylint: disable=R0201
     def is_valid_username(self, username):
+        """
+        Check if a user with this username exists.
+        """
         return False
 
     # pylint: disable=R0201
@@ -293,6 +283,19 @@ class AuthMediator(object):
         """
         return 'Unauthorised access denied'
 
+    @staticmethod
+    def get_header():
+        """
+        Get the value of the HTTP Authorization header, if present.
+        """
+        header = web.ctx.env.get('HTTP_AUTHORIZATION')
+        if header is None:
+            return None, None
+        parts = header.split(' ', 1)
+        if len(parts) == 1:
+            parts.append('')
+        return parts[0], parts[1]
+
     def _is_authorized(self):
         """
         Check if the provided credentials match.
@@ -300,7 +303,7 @@ class AuthMediator(object):
         auth_type = None
         auth_data = None
         if self.method.name is not None:
-            auth_type, auth_data = _get_header()
+            auth_type, auth_data = self.get_header()
 
         # Unexpected auth type.
         if self.method.name != auth_type:
