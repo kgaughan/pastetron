@@ -51,7 +51,7 @@ def parse_fields(header):
     for match in PARSE_HEADER.finditer(header):
         key = match.group(1).lower()
         value = match.group(3)
-        if value == '':
+        if value is None:
             value = match.group(4)
         yield key, value
 
