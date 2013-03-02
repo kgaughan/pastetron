@@ -226,11 +226,14 @@ class DigestAuth(Auth):
         ha1 = mediator.get_digest_ha1(username)
         if ha1 is None:
             return None, False
-
         nonce = self._make_nonce(web.ctx.ip)
         if nonce != fields['nonce']:
             raise StaleAuth
         ha2 = make_hash((web.ctx.method, fields['uri']))
+        # Currently we don't really do anything with 'nc' and 'cnonce', so
+        # it's not really providing any protection against replay attacks.
+        # However, its here for when I think of a good way to support them
+        # properly.
         ha2 = ':'.join((fields['nc'], fields['cnonce'], fields['qop'], ha2))
         make_hash((web.ctx.method, fields['uri']))
         expected = self.make_response(ha1, nonce, ha2)
