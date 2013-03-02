@@ -8,7 +8,14 @@ import os.path
 import creole
 import web
 
-from pastetron import db, feed, highlighting, pagination, utils
+from pastetron import (
+    authorisation,
+    db,
+    feed,
+    highlighting,
+    pagination,
+    utils,
+)
 
 
 urls = (
@@ -18,7 +25,6 @@ urls = (
     r'/pastes/(\d+)?', 'Recent',
     r'/pygments.css', 'Stylesheet',
 )
-
 
 render = web.template.render(
     os.path.join(os.path.dirname(__file__), 'templates'),
@@ -36,12 +42,15 @@ render = web.template.render(
     }
 )
 
+auth = authorisation.AuthMediator()
+
 
 class Recent(object):
     """
     Index of all pastes, from most recent to oldest.
     """
 
+    @auth.requires_auth
     def GET(self, page_num=None):
         mime_type = utils.get_preferred_mimetype(
             ('text/html', 'application/atom+xml'),
@@ -83,9 +92,11 @@ class Post(object):
     Form for posting up a new paste.
     """
 
+    @auth.requires_auth
     def GET(self):
         return render.post(user=utils.get_poster())
 
+    @auth.requires_auth
     def POST(self):
         form = web.input(
             poster=utils.get_default_name(),
@@ -121,6 +132,7 @@ class Show(object):
     Show a paste and post comments on the paste.
     """
 
+    @auth.requires_auth
     def GET(self, paste_id):
         return self.show_paste(paste_id)
 
@@ -145,6 +157,7 @@ class Show(object):
             captcha_error=captcha_error,
         )
 
+    @auth.requires_auth
     def POST(self, paste_id):
         form = web.input(
             poster=utils.get_default_name(),
@@ -163,6 +176,7 @@ class ShowRaw(object):
     Show a raw paste.
     """
 
+    @auth.requires_auth
     def GET(self, paste_id):
         row = db.get_paste(paste_id)
         if row is None:
