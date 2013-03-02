@@ -110,28 +110,21 @@ class Auth(object):
         raise NotImplementedError
 
 
-class _DummyAuth(Auth):
+class _EnvironmentAuth(Auth):
     """
-    A dummy authentication method that always succeeds.
+    An authentication method that requires a named field be set in the
+    environment.
     """
 
-    def check(self, data, headers, mediator):
-        return headers.get('REMOTE_USER', None), True
-
-
-class _ForwardedUserAuth(Auth):
-    """
-    A dummy authentication method that always if the 'X-Forwarded-User'
-    header is set. This is useful if your app runs behind a reverse proxy
-    that handles auth itself.
-    """
+    def __init__(self, field):
+        super(_EnvironmentAuth, self).__init__()
+        self.field = field
 
     def challenge(self, realm, stale):
         web.ctx.status = '403 Forbidden'
 
-
     def check(self, data, headers, mediator):
-        username = headers.get('HTTP_X_FORWARDED_USER', None)
+        username = headers.get(self.field, None)
         return username, mediator.is_valid_username(username)
 
 
@@ -228,9 +221,9 @@ class DigestAuth(Auth):
 
 
 # Default dummy auth checker.
-DUMMY = _DummyAuth()
+DUMMY = _EnvironmentAuth('REMOTE_USER')
 # Default forwarded user auth checker.
-FORWARDED_USER = _ForwardedUserAuth()
+FORWARDED_USER = _EnvironmentAuth('HTTP_X_FORWARDED_USER')
 # Default basic auth checker.
 BASIC = _BasicAuth()
 # Default digest auth checker.
@@ -267,7 +260,7 @@ class AuthMediator(object):
         """
         Check if a user with this username exists.
         """
-        return False
+        return True
 
     # pylint: disable=R0201
     def default_response(self):
