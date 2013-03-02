@@ -103,8 +103,9 @@ class Auth(object):
         missing = set(self.expected)
         fields = {}
         for key, value in parse_fields(data):
+            key = key.lower()
+            fields[key] = value
             if key in missing:
-                fields[key] = value
                 missing.remove(key)
         if len(missing) > 0:
             raise ValueError('Missing fields: %s' % ', '.join(missing))
