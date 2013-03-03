@@ -1,11 +1,13 @@
 """
-Utility functions.
+Application bootstrapping.
 """
 
 import sqlite3
 
 import dbkit
 import web
+
+from pastetron import utils
 
 
 def configure_db_hook(app, global_config, settings):
@@ -26,6 +28,14 @@ def configure_db_hook(app, global_config, settings):
     app.add_processor(request_processor)
 
 
+def configure_authentication(views, settings):
+    """
+    """
+    auth_method_name = settings.get('auth_method', 'pastetron.httpauth:DUMMY')
+    views.auth.method = utils.load_object(auth_method_name)
+    views.auth.realm = settings.get('auth_realm', 'Pastetron')
+
+
 def initialise(views, global_config, settings):
     """
     Initialises a web.py views views as a WSGI application.
@@ -34,4 +44,5 @@ def initialise(views, global_config, settings):
     web.config.app = web.Storage(**settings)
     app = web.application(views.urls, symbols)
     configure_db_hook(app, global_config, settings)
+    configure_authentication(views, settings)
     return app

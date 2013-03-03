@@ -8,6 +8,7 @@ CREATE TABLE pastes (
 );
 
 CREATE INDEX ix_paste_created ON pastes (created);
+CREATE INDEX ix_paste_poster ON pastes (poster);
 
 CREATE TABLE comments (
 	comment_id INTEGER  NOT NULL PRIMARY KEY,
@@ -18,3 +19,11 @@ CREATE TABLE comments (
 );
 
 CREATE INDEX ix_comment_paste ON comments (paste_id);
+CREATE INDEX ix_comment_poster ON comments (poster);
+
+CREATE TABLE users (
+	username     TEXT NOT NULL PRIMARY KEY,
+	password     TEXT NULL,
+	display_name TEXT NOT NULL,
+	email        TEXT NULL
+);
