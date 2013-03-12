@@ -1,3 +1,12 @@
  * Password protection (AES256+CTR+HMAC)
  * Gravatars (requires email addresses)
- * Optional authentication
+ * Optional authentication:
+    * DONE: Direct auth off of a database table using HTTP digest auth.
+    * Enforcement of presence of REMOTE_USER environment variable.
+    * Autocreation of authenticated users.
+    * Direct LDAP support.
+ * Uploading and binary blob support.
+ * A decent skin.
+ * Inline preview.
+ * Switch from using lexer aliases to mimetypes.
+ * Search.
