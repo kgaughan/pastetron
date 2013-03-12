@@ -62,6 +62,24 @@ def get_page_length():
     return int(web.config.app.get('pastes_per_page', 20))
 
 
+def to_page_count(n_entries, entries_per_page):
+    """
+    Calculate the number of pages given a page count.
+    """
+    if n_entries == 0:
+        return 0
+    # How this works:
+    # Say the number of entries per page was 10. Thus we'd want entries 1-10
+    # to appear on page 1, 11-20 to appear on page 2, and so on. Naively, the
+    # number of pages is `n_entries / entries_per_page`, but as we're using
+    # integer arithmetic, this rounds down, so we need to adjust it up one.
+    # Also, if the number of entries is divisible by the number of page, (e.g.
+    # there are ten entries), the naive arithmetic will end up stating there
+    # are two pages, not just one. Thus to compensate for that, we subtract
+    # one from the number of entries before dividing.
+    return ((n_entries - 1) / entries_per_page) + 1
+
+
 def get_preferred_mimetype(acceptable, default):
     """
     Gets the preferred MIME type to use for rendering the response based on

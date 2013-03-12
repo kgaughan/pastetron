@@ -64,10 +64,9 @@ def get_page_count():
     """
     Get number of pages needed to list all pastes.
     """
-    n_pastes = dbkit.query_value("SELECT COUNT(*) FROM pastes")
-    if n_pastes == 0:
-        return 0
-    return (n_pastes / utils.get_page_length()) + 1
+    return utils.to_page_count(
+        dbkit.query_value("SELECT COUNT(*) FROM pastes"),
+        utils.get_page_length())
 
 
 def get_paste_list(page):
