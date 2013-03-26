@@ -90,6 +90,12 @@ h1 span {
 	text-align: right;
 }
 
+.content .paste .highlight {
+	overflow-x: scroll;
+	/* TODO: Find a better way of contraining this. */
+	width: 110ex;
+}
+
 .content table.pastes,
 .content table.csv {
 	width: 100%;
@@ -146,6 +152,7 @@ th, td {
 	padding: 0;
 	margin: 0;
 	text-align: left;
+	vertical-align: top;
 }
 
 .content table.pastes th,
