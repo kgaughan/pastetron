@@ -1,5 +1,6 @@
 CREATE TABLE pastes (
 	paste_id    INTEGER  NOT NULL PRIMARY KEY,
+	parent_id   INTEGER  NULL REFERENCES pasts (paste_id),
 	created     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	poster      TEXT     NOT NULL DEFAULT 'Anonymous',
 	user_id     INTEGER  NULL REFERENCES users (user_id),
