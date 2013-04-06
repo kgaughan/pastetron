@@ -91,7 +91,7 @@ h1 span {
 }
 
 .content .paste .highlight {
-	overflow-x: scroll;
+	overflow-x: auto;
 	/* TODO: Find a better way of contraining this. */
 	width: 110ex;
 }
