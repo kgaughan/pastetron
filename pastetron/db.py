@@ -29,7 +29,7 @@ def get_paste(paste_id):
     return dbkit.query_row("""
         SELECT  paste_id, created, poster, title, body, syntax
         FROM    pastes
-        WHERE   paste_id = ?
+        WHERE   paste_id = ? AND parent_id IS NULL
         """, (paste_id,))
 
 
@@ -65,7 +65,11 @@ def get_page_count():
     Get number of pages needed to list all pastes.
     """
     return utils.to_page_count(
-        dbkit.query_value("SELECT COUNT(*) FROM pastes"),
+        dbkit.query_value("""
+            SELECT  COUNT(*)
+            FROM    pastes
+            WHERE   parent_id IS NULL
+            """),
         utils.get_page_length())
 
 
@@ -77,6 +81,7 @@ def get_paste_list(page):
     return dbkit.query("""
         SELECT   paste_id, title, poster, created
         FROM     pastes
+        WHERE    parent_id IS NULL
         ORDER BY created DESC
         LIMIT    ?, ?
         """, (start, utils.get_page_length()))
@@ -89,6 +94,7 @@ def get_latest_pastes():
     return dbkit.query("""
         SELECT   paste_id, title, created, poster, body
         FROM     pastes
+        WHERE    parent_id IS NULL
         ORDER BY created DESC
         LIMIT    ?
         """, (utils.get_page_length(),))
