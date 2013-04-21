@@ -14,14 +14,14 @@ $var title: Recent pastes
 	$for paste in pastes:
 		<tr>
 			<td>
-				$if paste['title'] == '':
-					<a href="$url('/%d' % paste['paste_id'])">Paste #$paste['paste_id']</a>
+				$if paste.title == '':
+					<a href="$url('/%d' % paste.paste_id)">Paste #$paste.paste_id</a>
 				$else:
-					<a href="$url('/%d' % paste['paste_id'])">$paste['title']</a>
+					<a href="$url('/%d' % paste.paste_id)">$paste.title</a>
 			</td>
-			<td>$paste['poster']</td>
-			<td>$human(paste['created'])</td>
-			<td>$paste['comments']</td>
+			<td>$paste.poster</td>
+			<td>$human(paste.created)</td>
+			<td>$paste.comments</td>
 		</tr>
 	</tbody>
 </table>
