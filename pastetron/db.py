@@ -98,10 +98,13 @@ def get_paste_list(page):
     """
     start = (page - 1) * utils.get_page_length()
     return dbkit.query("""
-        SELECT   paste_id, title, poster, created
-        FROM     pastes
-        ORDER BY created DESC
-        LIMIT    ?, ?
+        SELECT      paste_id, title, pastes.poster, pastes.created,
+                    COUNT(comment_id) AS comments
+        FROM        pastes
+        LEFT JOIN   comments USING (paste_id)
+        GROUP BY    paste_id
+        ORDER BY    pastes.created DESC
+        LIMIT       ?, ?
         """, (start, utils.get_page_length()))
 
 
