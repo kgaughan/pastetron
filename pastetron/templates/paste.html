@@ -11,7 +11,11 @@ $var title: $:title
 <div class="comments">
 $for c in comments:
 	<div class="comment">
-		<p class="comment-head"><strong>$c.poster</strong> wrote on <strong>$human(c.created)</strong>:</p>
+		<p class="comment-head">
+			<a href="#c$c.comment_id" name="c$c.comment_id">#$loop.index</a>:
+			<strong>$c.poster</strong> wrote on
+			<strong>$human(c.created)</strong>:
+		</p>
 		$:creole2html(c.body)
 	</div>
 </div>
