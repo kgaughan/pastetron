@@ -7,7 +7,7 @@ import sqlite3
 import dbkit
 import web
 
-from pastetron import utils
+from pastetron import utils, views
 
 
 def configure_db_hook(app, global_config, settings):
@@ -28,7 +28,7 @@ def configure_db_hook(app, global_config, settings):
     app.add_processor(request_processor)
 
 
-def configure_authentication(views, settings):
+def configure_authentication(settings):
     """
     """
     auth_method_name = settings.get('auth_method', 'pastetron.httpauth:DUMMY')
@@ -36,13 +36,11 @@ def configure_authentication(views, settings):
     views.auth.realm = settings.get('auth_realm', 'Pastetron')
 
 
-def initialise(views, global_config, settings):
+def initialise(app, global_config, **settings):
     """
-    Initialises a web.py views views as a WSGI application.
+    Initialise a web.py application, returning a WSGI application.
     """
-    symbols = dict((k, getattr(views, k)) for k in dir(views))
     web.config.app = web.Storage(**settings)
-    app = web.application(views.urls, symbols)
     configure_db_hook(app, global_config, settings)
-    configure_authentication(views, settings)
-    return app
+    configure_authentication(settings)
+    return app.wsgifunc()

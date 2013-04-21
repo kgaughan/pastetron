@@ -2,18 +2,30 @@
 Pastetron - A pastebin application.
 """
 
+import functools
+
+import web
+
 import pastetron.bootstrap
-import pastetron.views
-# pylint: disable-msg=W0401
-from pastetron.version import *  # flake8: noqa
 
 
-def paste(global_config, **settings):
-    """
-    PasteDeploy runner.
-    """
-    app = pastetron.bootstrap.initialise(
-        pastetron.views,
-        global_config,
-        settings)
-    return app.wsgifunc()
+urls = (
+    r'/',
+    'pastetron.views.Post',
+
+    r'/(\d+)',
+    'pastetron.views.Show',
+
+    r'/(\d+)/raw',
+    'pastetron.views.ShowRaw',
+
+    r'/pastes/(\d+)?',
+    'pastetron.views.Recent',
+
+    r'/pygments.css',
+    'pastetron.views.Stylesheet',
+)
+
+app = web.application(urls)
+
+paste = functools.partial(pastetron.bootstrap.initialise, app)

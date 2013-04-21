@@ -18,14 +18,6 @@ from pastetron import (
 )
 
 
-urls = (
-    r'/', 'Post',
-    r'/(\d+)', 'Show',
-    r'/(\d+)/raw', 'ShowRaw',
-    r'/pastes/(\d+)?', 'Recent',
-    r'/pygments.css', 'Stylesheet',
-)
-
 render = web.template.render(
     os.path.join(os.path.dirname(__file__), 'templates'),
     base='layout',
