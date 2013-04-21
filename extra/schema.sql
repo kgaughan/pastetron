@@ -1,15 +1,19 @@
 CREATE TABLE pastes (
 	paste_id    INTEGER  NOT NULL PRIMARY KEY,
-	parent_id   INTEGER  NULL REFERENCES pasts (paste_id),
 	created     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	poster      TEXT     NOT NULL DEFAULT 'Anonymous',
 	user_id     INTEGER  NULL REFERENCES users (user_id),
-	title       TEXT     NOT NULL,
-	body        TEXT     NOT NULL,
-	syntax      TEXT     NOT NULL DEFAULT 'text'
+	title       TEXT     NOT NULL
 );
 
 CREATE INDEX ix_paste_created ON pastes (created);
+
+CREATE TABLE chunks (
+	chunk_id    INTEGER  NOT NULL PRIMARY KEY,
+	paste_id    INTEGER  NULL REFERENCES pastes (paste_id),
+	body        TEXT     NOT NULL,
+	syntax      TEXT     NOT NULL DEFAULT 'text'
+);
 
 CREATE TABLE comments (
 	comment_id INTEGER  NOT NULL PRIMARY KEY,

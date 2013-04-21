@@ -8,29 +8,49 @@ from pastetron import utils
 
 
 @dbkit.transactional
-def add_paste(poster, title, body, fmt):
+def add_paste(poster, title, chunks):
     """
     Create a new paste.
     """
     dbkit.execute("""
-        INSERT INTO pastes (
-            poster, title, body, syntax
-        ) VALUES (
-            ?, ?, ?, ?
-        )
-        """, (poster, title, body, fmt))
-    return dbkit.last_row_id()
+        INSERT INTO pastes (poster, title) VALUES (?, ?)
+        """, (poster, title))
+    paste_id = dbkit.last_row_id()
+    for body, syntax in chunks:
+        dbkit.execute("""
+            INSERT INTO chunks (paste_id, body, syntax) VALUES (?, ?, ?)
+            """, (paste_id, body, syntax))
+    return paste_id
 
 
 def get_paste(paste_id):
     """
     Get a paste by ID.
     """
-    return dbkit.query_row("""
-        SELECT  paste_id, created, poster, title, body, syntax
+    paste = dbkit.query_row("""
+        SELECT  paste_id, created, poster, title
         FROM    pastes
-        WHERE   paste_id = ? AND parent_id IS NULL
+        WHERE   paste_id = ?
         """, (paste_id,))
+    if paste is not None:
+        paste['chunks'] = dbkit.query("""
+            SELECT  chunk_id, body, syntax
+            FROM    chunks
+            WHERE   paste_id = ?
+            ORDER BY chunk_id
+            """, (paste_id,))
+    return paste
+
+
+def get_chunk(chunk_id):
+    """
+    Get a paste chunk by ID.
+    """
+    return dbkit.query_row("""
+        SELECT  body, syntax
+        FROM    chunks
+        WHERE   chunk_id = ?
+        """, (chunk_id,))
 
 
 @dbkit.transactional
@@ -68,7 +88,6 @@ def get_page_count():
         dbkit.query_value("""
             SELECT  COUNT(*)
             FROM    pastes
-            WHERE   parent_id IS NULL
             """),
         utils.get_page_length())
 
@@ -81,7 +100,6 @@ def get_paste_list(page):
     return dbkit.query("""
         SELECT   paste_id, title, poster, created
         FROM     pastes
-        WHERE    parent_id IS NULL
         ORDER BY created DESC
         LIMIT    ?, ?
         """, (start, utils.get_page_length()))
@@ -92,9 +110,8 @@ def get_latest_pastes():
     Get the most recently posted pastes.
     """
     return dbkit.query("""
-        SELECT   paste_id, title, created, poster, body
+        SELECT   paste_id, title, created, poster
         FROM     pastes
-        WHERE    parent_id IS NULL
         ORDER BY created DESC
         LIMIT    ?
         """, (utils.get_page_length(),))

@@ -113,8 +113,7 @@ class Post(object):
         paste_id = db.add_paste(
             form.poster,
             form.title.strip(),
-            form.body,
-            form.syntax,
+            [(form.body, form.syntax)],
         )
         return web.seeother(web.url('/%d' % (paste_id,)))
 
@@ -141,8 +140,7 @@ class Show(object):
             created=row['created'],
             poster=row['poster'],
             title=title,
-            body=row['body'],
-            syntax=row['syntax'],
+            chunks=row['chunks'],
             comments=comments,
             user=utils.get_poster(),
             comment=comment,
@@ -165,14 +163,14 @@ class Show(object):
 
 class ShowRaw(object):
     """
-    Show a raw paste.
+    Show a raw paste chunk.
     """
 
     @auth.requires_auth
-    def GET(self, paste_id):
-        row = db.get_paste(paste_id)
+    def GET(self, chunk_id):
+        row = db.get_chunk(chunk_id)
         if row is None:
-            return web.notfound('No such paste.')
+            return web.notfound('No such chunk.')
         web.header('Content-Type', 'text/plain; charset=utf-8', unique=True)
         return row['body']
 

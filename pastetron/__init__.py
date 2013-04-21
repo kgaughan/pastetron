@@ -16,7 +16,7 @@ urls = (
     r'/(\d+)',
     'pastetron.views.Show',
 
-    r'/(\d+)/raw',
+    r'/chunks/(\d+)',
     'pastetron.views.ShowRaw',
 
     r'/pastes/(\d+)?',

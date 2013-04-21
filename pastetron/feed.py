@@ -71,4 +71,3 @@ def build_entry(builder, id_, entry):
         builder.tag('updated', utils.date(entry['created']))
         with builder.within('author'):
             builder.tag('name', entry['poster'])
-        builder.tag('content', entry['body'], type='text')
