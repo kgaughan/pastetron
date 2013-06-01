@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-from __future__ import with_statement
-
 from setuptools import setup, find_packages
 from buildkit import *
 
@@ -22,19 +20,17 @@ setup(
     include_package_data=True,
 
     entry_points={
-        'console_scripts': [
-        ],
-        'paste.app_factory': [
+        'paste.app_factory': (
             'main=pastetron:paste',
-        ],
+        ),
     },
 
-    classifiers=[
+    classifiers=(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-    ],
+    ),
 
     author=META['author'],
-    author_email=META['email']
+    author_email=META['email'],
 )
