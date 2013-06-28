@@ -10,9 +10,10 @@ try:
 except:  # pylint: disable-msg=W0702
     import StringIO as stringio
 
+import pkg_resources
 import web
 
-from pastetron import version, utils
+from pastetron import utils
 
 
 def generate_feed(entries):
@@ -50,7 +51,8 @@ def build_feed(builder, title, updated, id_, entries):
         builder.tag(
             'generator', 'Pastetron',
             uri='https://github.com/kgaughan/pastetron',
-            version=version.__version__)
+            version=pkg_resources.get_distribution('pastetron').version,
+        )
         for entry in entries:
             build_entry(builder, id_, entry)
 

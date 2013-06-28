@@ -4,12 +4,9 @@ from setuptools import setup, find_packages
 from buildkit import *
 
 
-META = get_metadata('pastetron/version.py')
-
-
 setup(
     name='pastetron',
-    version=META['version'],
+    version='0.1.0',
     description='A pastebin application',
     long_description=read('README'),
     url='https://github.com/kgaughan/pastetron/',
@@ -31,6 +28,6 @@ setup(
         'Programming Language :: Python',
     ),
 
-    author=META['author'],
-    author_email=META['email'],
+    author='Keith Gaughan',
+    author_email='k@stereochro.me',
 )
