@@ -7,6 +7,14 @@ $def with (content)
 		<link rel="alternate" type="application/atom+xml" href="$url('/pastes/')" title="Feed of Latest Pastes">
 		$for name in ('all', 'screen', 'print'):
 			<link rel="stylesheet" type="text/css" media="$name" href="$url('/static/%s.css' % name)">
+		<script type="text/javascript">
+		function selectText(id) {
+			var elem = document.getElementById(id);
+			var range = document.createRange();
+			range.selectNode(elem);
+			window.getSelection().addRange(range);
+		}
+		</script>
 	</head>
 	<body>
 		<div class="nav">
