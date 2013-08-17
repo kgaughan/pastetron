@@ -4,7 +4,7 @@ Database interface code.
 
 import dbkit
 
-from pastetron import utils
+from . import utils
 
 
 @dbkit.transactional

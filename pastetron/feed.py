@@ -13,7 +13,7 @@ except:  # pylint: disable-msg=W0702
 import pkg_resources
 import web
 
-from pastetron import utils
+from . import utils
 
 
 def generate_feed(entries):

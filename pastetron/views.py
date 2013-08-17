@@ -8,7 +8,7 @@ import os.path
 import creole
 import web
 
-from pastetron import (
+from . import (
     authorisation,
     db,
     feed,

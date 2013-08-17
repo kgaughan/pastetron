@@ -4,7 +4,7 @@ Authorisation.
 
 import dbkit
 
-from pastetron import httpauth
+from . import httpauth
 
 
 class AuthMediator(httpauth.AuthMediator):

@@ -12,7 +12,7 @@ from xml.sax import saxutils
 import mimeparse
 import web
 
-from pastetron import recaptcha
+from . import recaptcha
 
 
 class XMLBuilder(object):

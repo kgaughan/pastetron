@@ -6,7 +6,7 @@ import functools
 
 import web
 
-from pastetron import bootstrap
+from . import bootstrap
 
 
 urls = (
