@@ -18,7 +18,7 @@ setup(
 
     entry_points={
         'paste.app_factory': (
-            'main=pastetron:app_factory',
+            'main=pastetron:paste',
         ),
     },
 

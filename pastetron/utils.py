@@ -2,8 +2,10 @@
 Various utility functions.
 """
 
+import ConfigParser
 import contextlib
 import datetime
+import os
 import re
 from xml.sax import saxutils
 
@@ -175,3 +177,15 @@ def load_object(object_ref):
 
     module = __import__(module_name, fromlist=[object_name])
     return getattr(module, object_name)
+
+
+def read_configuration(env_var, section):
+    """
+    Read a section from an INI file pointed to by an environment variable.
+    """
+    config = ConfigParser.RawConfigParser()
+    config.add_section(section)
+    path = os.getenv(env_var)
+    if path is not None:
+        config.read(path)
+    return dict(config.items(section))

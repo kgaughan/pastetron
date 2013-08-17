@@ -46,3 +46,12 @@ def initialise(app, global_config=None, **settings):
     views.auth.realm = settings['auth_realm']
 
     return app.wsgifunc()
+
+
+def initialise_from_environment(app_factory):
+    """
+    If you're not using Paste, you can configure and instantiate instances
+    of the application.
+    """
+    config = utils.read_configuration('PASTETRON_CONFIG', 'pastetron')
+    return app_factory(global_config=None, **config)
