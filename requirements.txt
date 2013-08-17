@@ -1,4 +1,4 @@
-dbkit==0.2.0
+dbkit==0.2.2
 mimeparse==0.1.3
 Pygments==1.6rc1
 python-creole==1.0.6
