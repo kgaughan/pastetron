@@ -26,6 +26,5 @@ urls = (
     'pastetron.views.Stylesheet',
 )
 
-app = web.application(urls)
-
-paste = functools.partial(pastetron.bootstrap.initialise, app)
+app_factory = functools.partial(pastetron.bootstrap.initialise,
+                                web.application(urls))
