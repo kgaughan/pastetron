@@ -18,3 +18,14 @@ It (currently) has no build-in authentication or CSRF prevention support, so
 is only intended for private use or use within an organisation.
 
 .. _pastebin: http://en.wikipedia.org/wiki/Pastebin
+
+Running with Paste
+==================
+
+Pastetron exposes a WSGI application factory for use with Paste_. You can
+refer to it with ``egg:pastetron`` like so::
+
+    [app:pastetron]
+    use = egg:pastetron
+
+.. _Paste: http://pythonpaste.org/
