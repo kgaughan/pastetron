@@ -28,4 +28,27 @@ refer to it with ``egg:pastetron`` like so::
     [app:pastetron]
     use = egg:pastetron
 
+Running with a standard WSGI server
+===================================
+
+The ``pastetron.wsgi`` module exposes the WSGI application as ``app``.
+
+To run it using uwsgi_::
+
+    $ uwsgi --master --http localhost:8000 -w pastetron.wsgi:app
+
+To urn it using waitress_::
+
+    $ waitress-serve pastetron.wsgi:app
+
+To specify the configuration file path, assign it to the environment variable
+``PASTETRON_CONFIG``. The configuration file is an INI file with a single
+section, ``pastetron``. Example::
+
+    [pastetron]
+    db_path=/var/db/pastetron.sqlite
+    site_name=My Pastes
+
+.. _uwsgi: http://projects.unbit.it/uwsgi/
+.. _waitress: http://docs.pylonsproject.org/projects/waitress/
 .. _Paste: http://pythonpaste.org/

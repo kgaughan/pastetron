@@ -27,5 +27,3 @@ urls = (
 )
 
 paste = functools.partial(bootstrap.initialise, web.application(urls))
-
-app_factory = functools.partial(bootstrap.initialise_from_environment, paste)
