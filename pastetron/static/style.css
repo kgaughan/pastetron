@@ -91,6 +91,7 @@ h1 span {
 }
 
 .content .paste .highlight {
+	background: inherit;
 	overflow-x: auto;
 	/* TODO: Find a better way of contraining this. */
 	width: 110ex;
@@ -208,4 +209,15 @@ form label strong {
 	width: 6.75em;
 	margin-left: -7em;
 	text-align: right;
+}
+
+.highlighttable .linenos {
+	background: #DDD;
+	border-right: 2px solid #CCC;
+	padding: 0 1ex;
+}
+
+.highlighttable .code {
+	padding-left: 1ex;
+	background: inherit;
 }

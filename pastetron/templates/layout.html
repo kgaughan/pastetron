@@ -5,8 +5,7 @@ $def with (content)
 		<title>$content.title - Pastetron</title>
 		<link rel="stylesheet" type="text/css" media="all" href="$url('/pygments.css')">
 		<link rel="alternate" type="application/atom+xml" href="$url('/pastes/')" title="Feed of Latest Pastes">
-		$for name in ('all', 'screen', 'print'):
-			<link rel="stylesheet" type="text/css" media="$name" href="$url('/static/%s.css' % name)">
+		<link rel="stylesheet" type="text/css" media="all" href="$url('/static/style.css')">
 		<script type="text/javascript">
 		function selectText(id) {
 			var elem = document.getElementById(id);
