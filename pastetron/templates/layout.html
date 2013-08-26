@@ -9,13 +9,13 @@ $def with (content)
 		<script type="text/javascript" href="$url('/static/code.js')"></script>
 	</head>
 	<body>
+		<h1><span>$get_site_name()</span> $content.title</h1>
 		<div class="nav">
 			<ul>
-				<li class="primary"><a href="$url('/')">Home</a></li>
+				<li><a href="$url('/')">Home</a></li>
 				<li><a href="$url('/pastes/')">Recent Pastes</a></li>
 			</ul>
 		</div>
-		<h1><span>$get_site_name()</span> $content.title</h1>
 		<div class="content">$:content</div>
 	</body>
 </html>
