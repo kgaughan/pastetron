@@ -1,4 +1,4 @@
 include LICENSE ChangeLog
 recursive-include extra *.ini *.sql
-recursive-include pastetron/static *.css
+recursive-include pastetron/static *.css *.js
 recursive-include pastetron/templates *.html
