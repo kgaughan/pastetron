@@ -24,13 +24,6 @@ FORMATTER = pygments.formatters.HtmlFormatter(  # pylint: disable-msg=E1101
     cssclass=CSS_CLASS)
 
 
-def get_stylesheet():
-    """
-    Generate a stylesheet for syntax highlighting the output.
-    """
-    return FORMATTER.get_style_defs('.' + CSS_CLASS)
-
-
 def guess_lexer_alias(body):
     """
     Guess the alias of the lexer to use when rendering the given text.

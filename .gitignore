@@ -16,3 +16,5 @@ __pycache__
 # Other random nonsense
 /.venv
 *.db
+# Stuff that may get generated.
+/pastetron/static/pygments.css

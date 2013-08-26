@@ -173,13 +173,3 @@ class ShowRaw(object):
             return web.notfound('No such chunk.')
         web.header('Content-Type', 'text/plain; charset=utf-8', unique=True)
         return row['body']
-
-
-class Stylesheet(object):
-    """
-    Generate the Pygments stylesheet.
-    """
-
-    def GET(self):
-        web.header('Content-Type', 'text/css; charset=utf-8', unique=True)
-        return highlighting.get_stylesheet()

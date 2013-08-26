@@ -1,6 +1,21 @@
 #!/usr/bin/env python
 
 from setuptools import setup, find_packages
+from setuptools.command.build_py import build_py
+
+
+class ExtraAssets(build_py):
+
+    def run(self):
+        if not self.dry_run:
+            import os.path
+            from pygments.formatters import HtmlFormatter
+            formatter = HtmlFormatter(linenos=True, cssclass='highlight')
+            target_dir = os.path.join(self.build_lib, 'pastetron/static')
+            self.mkpath(target_dir)
+            with open(os.path.join(target_dir, 'pygments.css'), 'w') as fh:
+                fh.write(formatter.get_style_defs('.highlight'))
+        build_py.run(self)
 
 
 setup(
@@ -42,6 +57,9 @@ setup(
         'paste.app_factory': (
             'main=pastetron:paste',
         ),
+    },
+    cmdclass={
+        'build_py': ExtraAssets,
     },
 
     classifiers=(

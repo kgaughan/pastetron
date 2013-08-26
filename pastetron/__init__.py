@@ -21,9 +21,6 @@ urls = (
 
     r'/pastes/(\d+)?',
     'pastetron.views.Recent',
-
-    r'/pygments.css',
-    'pastetron.views.Stylesheet',
 )
 
 paste = functools.partial(bootstrap.initialise, web.application(urls))
