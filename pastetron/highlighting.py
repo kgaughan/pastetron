@@ -21,6 +21,8 @@ CSS_CLASS = 'highlight'
 # create it once.
 FORMATTER = pygments.formatters.HtmlFormatter(  # pylint: disable-msg=E1101
     linenos=True,
+    anchorlinenos=True,
+    lineanchors='line',
     cssclass=CSS_CLASS)
 
 

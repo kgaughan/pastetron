@@ -179,9 +179,13 @@ form label strong {
 }
 .highlighttable .linenos {
 	background: #544C44;
-	color: #C8C0B8;
+	color: #F8F0E8;
 	padding: 0 1ex;
 	width: 1px;
+}
+.linenos a {
+	color: inherit;
+	text-decoration: none;
 }
 .highlighttable .code {
 	padding-left: 1ex;
