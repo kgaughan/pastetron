@@ -191,3 +191,14 @@ form label strong {
 	padding-left: 1ex;
 	background: inherit;
 }
+
+.tools {
+	text-align: right;
+}
+.tools a {
+	color: #F8F0E8;
+	background: #544C44;
+	padding: 0.125ex 1ex;
+	border-radius: 1ex;
+	text-decoration: none;
+}

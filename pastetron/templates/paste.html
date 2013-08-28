@@ -5,7 +5,7 @@ $var title: $:title
 	<p>Pasted by <strong>$poster</strong> on <strong>$human(created)</strong>:</p>
 	$for chunk in chunks:
 		<div>$:highlight(chunk.body, chunk.syntax)</div>
-		<p class="tools"><a href="$url('/chunks/%s' % chunk.chunk_id)">Download raw text</a></p>
+		<p class="tools"><a href="$url('/chunks/%s' % chunk.chunk_id)">&#8595; Download</a></p>
 </div>
 
 <div class="comments">
