@@ -3,9 +3,9 @@ Application views and routes.
 """
 
 import functools
-import os.path
 
 import creole
+import pkg_resources
 import web
 
 from . import (
@@ -19,7 +19,7 @@ from . import (
 
 
 render = web.template.render(
-    os.path.join(os.path.dirname(__file__), 'templates'),
+    pkg_resources.resource_filename('pastetron', 'templates'),
     base='layout',
     globals={
         'get_site_name': utils.get_site_name,
