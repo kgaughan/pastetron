@@ -3,9 +3,14 @@ $def with (content)
 <html>
 	<head>
 		<title>$content.title - Pastetron</title>
-		<link rel="alternate" type="application/atom+xml" href="$url('/pastes/')" title="Feed of Latest Pastes">
-		<link rel="stylesheet" type="text/css" media="all" href="$url('/static/style.css')">
-		<script type="text/javascript" href="$url('/static/code.js')"></script>
+		<link rel="alternate" type="application/atom+xml"
+			href="$url('/pastes/')" title="Feed of Latest Pastes">
+		<link rel="stylesheet" type="text/css" media="all"
+			href="$url('/static/style.css')">
+		<link rel="stylesheet" type="text/css" media="all"
+			href="//fonts.googleapis.com/css?family=Open+Sans:400,700,400italic">
+		<link rel="stylesheet" type="text/css" media="all"
+			href="$url('/static/pygments.css')">
 	</head>
 	<body>
 		<h1><span>$get_site_name()</span> $content.title</h1>

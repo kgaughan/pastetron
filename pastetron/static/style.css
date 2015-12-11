@@ -1,6 +1,3 @@
-@import url(//fonts.googleapis.com/css?family=Open+Sans:400,700,400italic);
-@import url(pygments.css);
-
 html {
 	width: 60em;
 	margin: 0 auto;
@@ -127,7 +124,7 @@ h1 span {
 	margin: 1ex 0 0 0;
 }
 
-.content ol.pagination {
+.content .pagination {
 	overflow: hidden;
 	width: 100%;
 	text-align: center;
@@ -135,16 +132,16 @@ h1 span {
 	padding: 0;
 	list-style: none;
 }
-.content ol.pagination li {
+.content .pagination li {
 	display: inline;
 	margin: 0 0.25ex;
 	padding: 0;
 }
-.content ol.pagination li.current {
+.content .pagination .current {
 	padding: 0.125ex 0.75ex;
 	font-weight: bold;
 }
-.content ol.pagination li a {
+.content .pagination li a {
 	padding: 0.125ex 0.75ex;
 	background: #C8C0B8;
 	color: black;
